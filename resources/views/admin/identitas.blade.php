@@ -147,7 +147,7 @@
     @endif
 
     const avatar = document.getElementById('previewImg')
-    let cropper = new Cropper(avatar, {
+    const cropper = new Cropper(avatar, {
         aspectRatio: 1, // Sesuaikan dengan rasio aspek yang Anda inginkan
         minContainerWidth: 350, // 
         minContainerHeight: 350, //
@@ -165,7 +165,7 @@
             };
             reader.readAsDataURL(file);
         }
-        replaceBtn()
+        // replaceBtn()
     });
 
     $('#uploadImgModal').on('hidden.bs.modal', () => {
@@ -213,6 +213,8 @@
 
         runEvent()
     }
+
+    replaceBtn()
 
     function replaceImg(newImageName) {
         console.log(newImageName);

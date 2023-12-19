@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 use App\Providers\SettingServiceProvider as SettingService;
 use App\Providers\AlertResponseServiceProvider as AlertResponse;
 
@@ -39,10 +41,13 @@ class IdentitasController extends Controller
 
         $image = $request->file('logo_madin');
         $imageName = 'logo-' . uniqid() . '.' . $image->getClientOriginalExtension();
-        $image->storeAs('/public/logo', $imageName);
+
+        $manager = new ImageManager(Driver::class);
+        $image = $manager->read($image);
+        $image->resize(150, 150);
+        $image->toPng()->save(storage_path('app/public/logo/' . $imageName));
 
         Setting::setSettingMadin('logo_madin', $imageName);
-
         $msg = AlertResponse::response('success', 'Berhasil ubah logo madin!');
 
         return response()->json([$msg, $imageName]);

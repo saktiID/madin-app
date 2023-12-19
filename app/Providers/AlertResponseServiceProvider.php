@@ -23,6 +23,7 @@ class AlertResponseServiceProvider extends ServiceProvider
         }
 
         $msg = [
+            'type' => $status,
             'icon' => $status,
             'title' => $title,
             'html' => $html,

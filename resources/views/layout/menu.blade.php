@@ -6,7 +6,7 @@
 
 @if (Auth::user()->role == "Administrator")
 @include('layout.admin-menu')
-@endif)
+@endif
 
 {{-- END ADMIN MENU --}}
 

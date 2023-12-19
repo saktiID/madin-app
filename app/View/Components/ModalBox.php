@@ -17,6 +17,7 @@ class ModalBox extends Component
         public string $modalUrl,
         public string $modalSubmitText,
         public string $classSubmit = 'primary',
+        public string $modalFormMethod = 'GET',
     ) {
     }
 

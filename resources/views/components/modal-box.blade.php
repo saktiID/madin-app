@@ -8,16 +8,17 @@
                 </button>
             </div>
 
-            <div class="modal-body">
+            <form action="{{ $modalUrl }}" method="{{ $modalFormMethod }}">
+                <div class="modal-body">
 
-                {{ $slot }}
+                    {{ $slot }}
 
-            </div>
-            <div class="modal-footer">
-                <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Batalkan</button>
-                <a href="{{ $modalUrl }}" type="submit" id="submitBtnModal" class="btn btn-{{ $classSubmit }}">{{ $modalSubmitText }}</a>
-            </div>
-
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Batalkan</button>
+                    <a href="{{ $modalUrl }}" type="submit" class="btn btn-{{ $classSubmit }}">{{ $modalSubmitText }}</a>
+                </div>
+            </form>
         </div>
     </div>
 </div>

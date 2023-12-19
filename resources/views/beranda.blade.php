@@ -20,4 +20,17 @@
 
 @section('style')
 <link rel="stylesheet" href="{{ asset('assets/css/dashboard/dash_2.css') }}">
+<link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert.css') }}">
+@endsection
+
+@section('script')
+<script src="{{ asset('plugins/sweetalerts/sweetalert2.min.js') }}"></script>
+<script>
+    @if(session('response'))
+    let data = @json(session('response'));
+    sweetAlert(data)
+    @endif
+
+</script>
 @endsection

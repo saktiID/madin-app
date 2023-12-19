@@ -1,5 +1,6 @@
 <?php
 
+use App\Providers\DataBerandaServiceProvider;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
@@ -169,6 +170,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ViewComposerServiceProvider::class,
+        App\Providers\DataBerandaServiceProvider::class,
 
     ])->toArray(),
 

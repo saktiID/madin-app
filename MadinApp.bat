@@ -34,6 +34,8 @@ for /L %%i in (!seconds!, -1, 1) do (
     timeout /nobreak /t 1 >nul
 )
 
+echo Refresh browser jika halaman aplikasi belum terbuka.
+
 echo.
 
 echo Membuka aplikasi MadinApp...

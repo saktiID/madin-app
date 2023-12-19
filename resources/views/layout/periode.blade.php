@@ -2,7 +2,7 @@
 
     <div class="col-xl-12 col-lg-12 col-md-12 col-12">
         <div class="alert alert-gradient d-flex justify-content-between align-items-center" role="alert">
-            <span>Periode saat ini: <strong>Semester 1 Tahun Ajaran 2023/2024</strong></span>
+            <span>Periode saat ini: <strong>Semester {{ $currentPeriode['semester'] }} Tahun Ajaran {{ $currentPeriode['tahun_ajaran'] }}</strong></span>
             <button type="button" class="btn btn-warning mr-0" data-toggle="modal" data-target="#periodeModal">
                 Pindah periode
             </button>
@@ -15,36 +15,42 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="periodeModal" tabindex="-1" role="dialog" aria-labelledby="periodeModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="periodeModalLabel">Pilih periode</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i data-feather="x"></i>
-                </button>
-            </div>
-            <form>
-                <div class="modal-body">
 
-                    <div class="input-group mb-2 mr-sm-2">
-                        <select id="semester" class="form-control">
-                            <option selected="">-- Semester --</option>
-                            <option>Semester 1</option>
-                            <option>Semester 2</option>
-                        </select>
-                        <select id="tahun-ajaran" class="form-control">
-                            <option selected="">-- Tahun Ajaran --</option>
-                            <option>...</option>
-                        </select>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Batalkan</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </div>
-            </form>
-        </div>
+<x-modal-box modalId="periodeModal" modalTitle="Pilih Periode" modalUrl="{{ route('set-periode') }}" modalSubmitText="Simpan">
+    <div class="alert alert-icon-left alert-light-warning" role="alert">
+        <i data-feather="alert-triangle"></i>
+        <strong>Perhatian!</strong> <span>Wajib memilih periode terlebih dahulu.</span>
     </div>
-</div>
+    <div class="input-group mb-2 mr-sm-2">
+        <select name="periode" id="periode" class="form-control" required>
+            <option value="">-- Periode --</option>
+            @foreach ($periode as $p )
+            <option value="{{ $p->id }}">{{ $p->semester }} {{ $p->tahun_ajaran }}</option>
+            @endforeach
+        </select>
+    </div>
+</x-modal-box>
+
+@section('script-layout')
+<script>
+    const submitPeriodeBtnModal = document.querySelector('#periodeModal .modal-dialog .modal-content .modal-footer')
+    const newSubmitPeriodeBtnModal = document.createElement('button')
+    newSubmitPeriodeBtnModal.type = "submit"
+    newSubmitPeriodeBtnModal.innerText = "Simpan"
+    newSubmitPeriodeBtnModal.classList.add('btn')
+    newSubmitPeriodeBtnModal.classList.add('btn-primary')
+    newSubmitPeriodeBtnModal.classList.add('simpan-periode')
+    submitPeriodeBtnModal.replaceChild(newSubmitPeriodeBtnModal, submitPeriodeBtnModal.childNodes[3])
+
+    const submitSimpanPeriodeBtn = document.querySelector('button[type="submit"].simpan-periode')
+    submitSimpanPeriodeBtn.addEventListener('click', () => {
+        let valPeriode = document.getElementById('periode').value
+        if (valPeriode) {
+            const spinner = document.createElement('div')
+            spinner.classList = "spinner-border text-white align-self-center loader-sm"
+            submitSimpanPeriodeBtn.replaceChild(spinner, submitSimpanPeriodeBtn.childNodes[0])
+        }
+    })
+
+</script>
+@endsection

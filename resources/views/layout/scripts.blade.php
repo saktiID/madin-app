@@ -19,5 +19,13 @@
 
 </script>
 
+@if(!session()->has('periode'))
+<script>
+    $('#periodeModal').modal('show')
+
+</script>
+@endif
+
 @yield('script')
+@yield('script-layout')
 <!-- END GLOBAL MANDATORY SCRIPTS -->

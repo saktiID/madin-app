@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Providers\AlertResponseServiceProvider as AlertResponse;
@@ -51,6 +50,7 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
+        session()->flush();
         $msg = AlertResponse::response('success', 'Berhasil keluar!');
         return redirect()->route('login')->with('response', $msg);
     }

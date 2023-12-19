@@ -18,34 +18,32 @@
                     <div class="widget-content widget-content-area">
 
 
-                        <form method="POST" action="{{ route('simpan-setting-identitas') }}" enctype="multipart/form-data">
-                            @csrf
-
-                            <div class="form-row mb-4">
-                                <div class="col-lg-4 col-sm-12">
-                                    <label>Logo Madin</label>
-                                    <input type="file" accept="image/*" id="logo_madin" name="logo_madin" hidden>
-                                    <div class="text-center">
-                                        <div class="avatar avatar-xl mb-4">
-                                            <img alt="logo" id="logo-image" src="{{ asset('storage/logo/' . $logo_madin) }}" width="250px" height="250px" />
-                                        </div>
-                                        <label for="logo_madin" class="btn btn-outline-primary btn-sm">Ubah logo</label>
+                        <div class="form-row">
+                            <div class="col-lg-4 col-sm-12">
+                                <label>Logo Madin</label>
+                                <input type="file" accept="image/*" id="logo_madin" name="logo_madin" hidden>
+                                <div class="text-center">
+                                    <div class="avatar avatar-xl mb-4">
+                                        <img alt="logo" id="logo-image" src="{{ asset('storage/logo/' . $logo_madin) }}" width="250px" height="250px" />
                                     </div>
-
-                                    <x-modal-box modalId="uploadImgModal" modalTitle="Upload Logo" modalUrl="#" modalSubmitText="Upload">
-                                        <div class="d-flex justify-content-center">
-                                            <img src="" id="previewImg" alt="preview">
-                                        </div>
-                                    </x-modal-box>
-
+                                    <label for="logo_madin" class="btn btn-outline-primary btn-sm">Ubah logo</label>
                                 </div>
 
-                                <div class=" col-lg-8 col-sm-12">
+                                <x-modal-box modalId="uploadImgModal" modalTitle="Upload Logo" modalUrl="#" modalSubmitText="Upload">
+                                    <div class="d-flex justify-content-center">
+                                        <img src="" id="previewImg" alt="preview">
+                                    </div>
+                                </x-modal-box>
+
+                            </div>
+
+                            <div class="col-lg-8 col-sm-12">
+                                <form method="POST" action="{{ route('simpan-setting-identitas') }}">
+                                    @csrf
                                     <div class="mb-3">
                                         <label for="nama_madin">Nama Madin</label>
                                         <input type="text" value="{{ $nama_madin }}" id="nama_madin" name="nama_madin" class="form-control">
                                     </div>
-
                                     <div class="mb-3">
                                         <label for="alamat_madin">Alamat Madin</label>
                                         <input type="text" value="{{ $alamat_madin }}" id="alamat_madin" name="alamat_madin" class="form-control">
@@ -76,12 +74,10 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="mb-3">
                                         <label for="nomor_statistik_madin">Nomor Statistik Madin</label>
                                         <input type="text" value="{{ $nomor_statistik_madin }}" id="nomor_statistik_madin" name="nomor_statistik_madin" class="form-control">
                                     </div>
-
                                     <div class="mb-3">
                                         <label for="nomo_notaris_madin">Nomor Notaris Madin</label>
                                         <input type="text" value="{{ $nomor_notaris_madin }}" id="nomor_notaris_madin" name="nomor_notaris_madin" class="form-control">
@@ -98,15 +94,12 @@
                                         <label for="nama_sekretatis_madin">Sekretaris Madin</label>
                                         <input type="text" value="{{ $nama_sekretaris_madin }}" id="nama_sekretaris_madin" name="nama_sekretaris_madin" class="form-control">
                                     </div>
-
-
-                                </div>
-
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="mb-3 btn btn-primary simpan-setting">Simpan</button>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="d-flex justify-content-end">
-                                <button type="submit" class="mb-3 btn btn-primary simpan-setting">Simpan</button>
-                            </div>
-                        </form>
+                        </div>
 
 
 
@@ -134,11 +127,11 @@
 <script src="{{ asset('cropperjs-main/dist/cropper.min.js') }}"></script>
 <x-sweet-alert />
 <script>
-    const submitBtn = document.querySelector('button[type="submit"].simpan-setting')
-    submitBtn.addEventListener('click', () => {
+    const submitSimpanSettingBtn = document.querySelector('button[type="submit"].simpan-setting')
+    submitSimpanSettingBtn.addEventListener('click', () => {
         const spinner = document.createElement('div')
         spinner.classList = "spinner-border text-white align-self-center loader-sm"
-        submitBtn.replaceChild(spinner, submitBtn.childNodes[0])
+        submitSimpanSettingBtn.replaceChild(spinner, submitSimpanSettingBtn.childNodes[0])
     })
 
     @if(session('response'))
@@ -205,11 +198,11 @@
     }
 
     function replaceBtn() {
-        const submitBtnModal = document.getElementById('submitBtnModal')
+        const submitUploadBtnModal = document.querySelector('#uploadImgModal .modal-dialog .modal-content .modal-footer a')
         const newSubmitBtnModal = document.createElement('span')
         newSubmitBtnModal.id = 'crop'
         newSubmitBtnModal.innerText = 'Crop & Upload'
-        submitBtnModal.replaceChild(newSubmitBtnModal, submitBtnModal.childNodes[0])
+        submitUploadBtnModal.replaceChild(newSubmitBtnModal, submitUploadBtnModal.childNodes[0])
 
         runEvent()
     }

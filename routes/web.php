@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DataAsatidzController;
 use App\Http\Controllers\Admin\IdentitasController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\PeriodeSetterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +25,7 @@ Route::group(['middleware' => ['guest']], function () {
 
 
 Route::group(['middleware' => ['auth']], function () {
+    Route::get('set-periode', [PeriodeSetterController::class, 'setCurrentPeriode'])->name('set-periode');
     Route::get('beranda', [BerandaController::class, 'index'])->name('beranda');
 
     Route::get('identitas', [IdentitasController::class, 'index'])->name('identitas');

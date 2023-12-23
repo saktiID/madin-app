@@ -1,3 +1,3 @@
 <div class="avatar text-center">
-    <img alt="avatar" src="{{ asset($avatar) }}" class="rounded" width="50px" height="50px" />
+    <img alt="avatar" src="{{ route('get-foto', ['filename' => $avatar]) }}" class="rounded bg-success" width="50px" height="50px" />
 </div>

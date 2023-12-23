@@ -22,7 +22,7 @@ class SettingSeeder extends Seeder
         Setting::create([
             'id' => Str::uuid(),
             'nama_setting' => 'logo_madin',
-            'nilai_setting' => 'logo-6581d7b38f324.png',
+            'nilai_setting' => 'logo-6586ff49e96fcs.png',
         ]);
 
         Setting::create([

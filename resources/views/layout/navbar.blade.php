@@ -26,7 +26,7 @@
                 <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
                     <div class="user-profile-section">
                         <div class="media mx-auto">
-                            <img src="{{ asset(Auth::user()->avatar) }}" class="img-fluid mr-2" alt="avatar">
+                            <img src="{{ route('get-foto', ['filename' => Auth::user()->avatar]) }}" class="img-fluid mr-2" alt="avatar">
                             <div class="media-body">
                                 <h5>{{ Auth::user()->nama }}</h5>
                                 <p>{{ Auth::user()->role }}</p>

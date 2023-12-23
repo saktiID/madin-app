@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DataAsatidzController;
 use App\Http\Controllers\Admin\IdentitasController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\FotoGetterController;
 use App\Http\Controllers\PeriodeSetterController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,14 +26,13 @@ Route::group(['middleware' => ['guest']], function () {
 
 
 Route::group(['middleware' => ['auth']], function () {
+    Route::get('get-foto/{filename}', [FotoGetterController::class, 'foto'])->name('get-foto');
     Route::get('set-periode', [PeriodeSetterController::class, 'setCurrentPeriode'])->name('set-periode');
     Route::get('beranda', [BerandaController::class, 'index'])->name('beranda');
 
     Route::get('identitas', [IdentitasController::class, 'index'])->name('identitas');
-    Route::post('identitas', [IdentitasController::class, 'simpanSetting'])->name('simpan-setting-identitas');
-    Route::post('logo', [IdentitasController::class, 'simpanLogo'])->name('simpan-logo');
-
-    Route::get('log', [BerandaController::class, 'index'])->name('log');
+    Route::post('identitas/edit', [IdentitasController::class, 'edit'])->name('simpan-setting-identitas');
+    Route::post('identitas/logo', [IdentitasController::class, 'logo'])->name('simpan-logo');
 
     Route::prefix('master-data')->group(function () {
         Route::get('/', function () {
@@ -40,7 +40,10 @@ Route::group(['middleware' => ['auth']], function () {
         });
         Route::get('/data-asatidz', [DataAsatidzController::class, 'index'])->name('data-asatidz');
         Route::get('/data-asatidz/{id}', [DataAsatidzController::class, 'detail'])->name('profile-asatidz');
-        Route::post('/data-asatidz', [DataAsatidzController::class, 'tambah'])->name('tambah-asatidz');
+        Route::post('/data-asatidz/tambah', [DataAsatidzController::class, 'tambah'])->name('tambah-asatidz');
+        Route::post('/data-asatidz/edit/credential', [DataAsatidzController::class, 'editCredential'])->name('edit-credential-asatidz');
+        Route::post('/data-asatidz/edit/biodata', [DataAsatidzController::class, 'editBiodata'])->name('edit-biodata-asatidz');
+        Route::post('/data-asatidz/foto', [DataAsatidzController::class, 'foto'])->name('foto-asatidz');
         Route::post('/data-asatidz/hapus', [DataAsatidzController::class, 'hapus'])->name('hapus-asatidz');
 
         Route::get('/data-santri', [DataAsatidzController::class, 'index'])->name('data-santri');
@@ -50,6 +53,8 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::get('raport/kelas/{id}', [DataAsatidzController::class, 'index'])->name('raport-kelas');
+
+    Route::get('log', [BerandaController::class, 'index'])->name('log');
 
 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');

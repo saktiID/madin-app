@@ -15,9 +15,9 @@ class AsatidzTambahServiceProvider extends ServiceProvider
     {
         $avatar = '';
         if ($request->gender == 'male') {
-            $avatar = 'storage/profile/user-male-90x90.png';
+            $avatar = 'user-male-90x90.png';
         } elseif ($request->gender == 'female') {
-            $avatar = 'storage/profile/user-female-90x90.png';
+            $avatar = 'user-female-90x90.png';
         }
 
         try {

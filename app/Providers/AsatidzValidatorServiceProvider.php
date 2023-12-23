@@ -10,11 +10,12 @@ class AsatidzValidatorServiceProvider extends ServiceProvider
     public static function validate($data)
     {
         $validator = Validator::make($data->all(), [
-            'email' => 'unique:users',
+            'email' => 'required|unique:users',
             'password' => 'confirmed|min:5',
             'nik' => 'min:16',
             'telp' => 'min:10'
         ], [
+            'email.required' => 'Email harus diisi.',
             'email.unique' => 'Email sudah ada yang menggunakan.',
             'password.confirmed' => 'Password tidak sama.',
             'password.min' => 'Password kurang dari 5 karakter.',

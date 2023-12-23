@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@madin.app',
             'role' => 'Administrator',
             'gender' => 'male',
-            'avatar' => 'storage/profile/user-male-90x90.png',
+            'avatar' => 'profile-65871c430292b.png',
             'password' => Hash::make('admin')
         ]);
 
@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             'email' => 'ustadz@madin.app',
             'role' => 'Asatidz',
             'gender' => 'male',
-            'avatar' => 'storage/profile/user-male-90x90.png',
+            'avatar' => 'profile-65871b7ae538f.png',
             'password' => Hash::make('ustadz')
         ]);
 
@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
             'email' => 'ustadzah@madin.app',
             'role' => 'Asatidz',
             'gender' => 'female',
-            'avatar' => 'storage/profile/user-female-90x90.png',
+            'avatar' => 'profile-65871bf4e9701.png',
             'password' => Hash::make('ustadzah')
         ]);
     }

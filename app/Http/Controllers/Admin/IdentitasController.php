@@ -19,10 +19,10 @@ class IdentitasController extends Controller
     {
         $data = Setting::getAllSettingMadin();
 
-        return view('admin.identitas', $data);
+        return view('admin.setting.identitas', $data);
     }
 
-    public function simpanSetting(Request $request)
+    public function edit(Request $request)
     {
 
         $update = SettingService::updateSetting($request);
@@ -36,7 +36,7 @@ class IdentitasController extends Controller
         }
     }
 
-    public function simpanLogo(Request $request)
+    public function logo(Request $request)
     {
 
         $image = $request->file('logo_madin');

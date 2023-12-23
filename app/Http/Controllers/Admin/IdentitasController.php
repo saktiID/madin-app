@@ -42,6 +42,8 @@ class IdentitasController extends Controller
         $image = $request->file('logo_madin');
         $imageName = 'logo-' . uniqid() . '.' . $image->getClientOriginalExtension();
 
+        $oldImage = Setting::getSettingMadin('logo_madin');
+
         $manager = new ImageManager(Driver::class);
         $image = $manager->read($image);
         $image->resize(150, 150);
@@ -49,6 +51,10 @@ class IdentitasController extends Controller
 
         Setting::setSettingMadin('logo_madin', $imageName);
         $msg = AlertResponse::response('success', 'Berhasil ubah logo madin!');
+
+        if (file_exists(storage_path('app/public/logo/' . $oldImage))) {
+            unlink(storage_path('app/public/logo/' . $oldImage));
+        }
 
         return response()->json([$msg, $imageName]);
     }

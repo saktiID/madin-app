@@ -86,9 +86,9 @@
 
     if (divError.hasChildNodes()) {
         let data = {
-            icon: 'error'
-            , title: 'Oops!'
-            , html: divError
+            icon: 'error', //
+            title: 'Oops!', //
+            html: divError
         }
         sweetAlert(data)
     }

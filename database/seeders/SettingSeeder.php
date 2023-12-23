@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Setting;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -23,7 +22,7 @@ class SettingSeeder extends Seeder
         Setting::create([
             'id' => Str::uuid(),
             'nama_setting' => 'logo_madin',
-            'nilai_setting' => '/img',
+            'nilai_setting' => 'logo-6581d7b38f324.png',
         ]);
 
         Setting::create([
@@ -65,7 +64,7 @@ class SettingSeeder extends Seeder
         Setting::create([
             'id' => Str::uuid(),
             'nama_setting' => 'nomor_notaris_madin',
-            'nilai_setting' => '452651',
+            'nilai_setting' => 'AHU-2269.A.H.02.01.Tahun.2023',
         ]);
 
         Setting::create([
@@ -77,13 +76,13 @@ class SettingSeeder extends Seeder
         Setting::create([
             'id' => Str::uuid(),
             'nama_setting' => 'nama_bendahara_madin',
-            'nilai_setting' => 'Pak Ustadz, MM',
+            'nilai_setting' => 'Pak Ustadz, SE',
         ]);
 
         Setting::create([
             'id' => Str::uuid(),
             'nama_setting' => 'nama_sekretaris_madin',
-            'nilai_setting' => 'Mas Sekretaris',
+            'nilai_setting' => 'Mas Sekretaris, S. Kom',
         ]);
     }
 }

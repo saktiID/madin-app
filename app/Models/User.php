@@ -33,6 +33,8 @@ class User extends Authenticatable
         'nama',
         'email',
         'role',
+        'gender',
+        'avatar',
         'password',
     ];
 

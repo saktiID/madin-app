@@ -4,7 +4,7 @@
         <div class="profile-info">
             <figure class="user-cover-image"></figure>
             <div class="user-info">
-                <img src="{{ asset('assets') . Auth::user()->avatar }}" alt="avatar">
+                <img src="{{ asset(Auth::user()->avatar) }}" alt="avatar">
                 <h6 class="">{{ Auth::user()->nama }}</h6>
                 <p class="">{{ Auth::user()->role }}</p>
             </div>

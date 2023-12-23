@@ -39,6 +39,10 @@ Route::group(['middleware' => ['auth']], function () {
             return redirect()->route('beranda');
         });
         Route::get('/data-asatidz', [DataAsatidzController::class, 'index'])->name('data-asatidz');
+        Route::get('/data-asatidz/{id}', [DataAsatidzController::class, 'detail'])->name('profile-asatidz');
+        Route::post('/data-asatidz', [DataAsatidzController::class, 'tambah'])->name('tambah-asatidz');
+        Route::post('/data-asatidz/hapus', [DataAsatidzController::class, 'hapus'])->name('hapus-asatidz');
+
         Route::get('/data-santri', [DataAsatidzController::class, 'index'])->name('data-santri');
         Route::get('/data-pelajaran', [DataAsatidzController::class, 'index'])->name('data-pelajaran');
         Route::get('/data-kelas', [DataAsatidzController::class, 'index'])->name('data-kelas');

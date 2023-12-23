@@ -2,6 +2,7 @@
 @section('title', 'Beranda')
 @section('content')
 <div class="row">
+
     <div class="col-lg-12 col-md-12 col-12 col-12">
         <div class="row">
 
@@ -11,9 +12,9 @@
             <x-widget-card col="4" theme='widget-engagement' icon='book' title='16' subtitle='Total Pelajaran' url='#' />
             <x-widget-card col="4" theme='widget-referral' icon='award' title='6' subtitle='Total Kelas' url='#' />
 
-
         </div>
     </div>
+
 </div>
 @endsection
 

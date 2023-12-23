@@ -12,7 +12,9 @@
                     </div>
                 </div>
                 <div class="widget-content">
+                    @if(Auth::user()->role == "Administrator")
                     <a href="{{ $url }}" class="btn btn-outline-primary">Lihat detail</a>
+                    @endif
                 </div>
             </div>
         </div>

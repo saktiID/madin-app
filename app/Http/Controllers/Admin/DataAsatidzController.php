@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Pengajar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Providers\AsatidzHapusServiceProvider as AsatidzHapus;
+use App\Providers\GlobalDataServiceProvider;
 use App\Providers\AlertResponseServiceProvider as AlertResponse;
-use App\Providers\AsatidzTambahServiceProvider as AsatidzTambah;
-use App\Providers\AsatidzDataTableServiceProvider as AsatidzDataTable;
-use App\Providers\AsatidzEditServiceProvider as AsatidzEdit;
-use App\Providers\AsatidzValidatorServiceProvider as AsatidzValidator;
+use App\Providers\asatidz\AsatidzEditServiceProvider as AsatidzEdit;
+use App\Providers\asatidz\AsatidzHapusServiceProvider as AsatidzHapus;
+use App\Providers\asatidz\AsatidzTambahServiceProvider as AsatidzTambah;
+use App\Providers\asatidz\AsatidzDataTableServiceProvider as AsatidzDataTable;
+use App\Providers\asatidz\AsatidzValidatorServiceProvider as AsatidzValidator;
 
 class DataAsatidzController extends Controller
 {
@@ -19,10 +20,13 @@ class DataAsatidzController extends Controller
      */
     public function index(Request $request)
     {
+
+        $data = GlobalDataServiceProvider::get();
+
         if ($request->ajax()) {
             return AsatidzDataTable::dataTable();
         }
-        return view('admin.asatidz.data-asatidz');
+        return view('admin.asatidz.data-asatidz', $data);
     }
 
 
@@ -31,10 +35,7 @@ class DataAsatidzController extends Controller
      */
     public function detail($id)
     {
-        if (!isset($id)) {
-            return redirect()->route('data-asatidz');
-        }
-
+        $data = GlobalDataServiceProvider::get();
         $data['data_asatidz'] = Pengajar::getProfileAsatidz($id);
 
         return view('admin.asatidz.profile-asatidz', $data);
@@ -123,10 +124,17 @@ class DataAsatidzController extends Controller
         $updateFoto = AsatidzEdit::foto($request, $imageName);
         if ($updateFoto) {
             $msg = AlertResponse::response('success', 'Berhasil ubah foto Asatidz!');
-            return response()->json([$msg, $imageName]);
+            return response()->json([
+                'status' => true,
+                'data' => $msg,
+                'newImage' => $imageName
+            ]);
         } else {
             $msg = AlertResponse::response('error', 'Gagal ubah foto Asatidz!');
-            return response()->json([$msg, $imageName]);
+            return response()->json([
+                'status' => true,
+                'data' => $msg,
+            ]);
         }
     }
 

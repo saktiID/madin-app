@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Santri extends Model
 {
@@ -25,7 +26,10 @@ class Santri extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'nama_santri',
+        'avatar',
+        'nis',
         'nik',
         'gender',
         'tempat_lahir',
@@ -34,4 +38,39 @@ class Santri extends Model
         'kabupaten',
         'provinsi',
     ];
+
+    /**
+     * method model ambil daftar data santri
+     */
+    public static function getListDataSantri()
+    {
+        $santri = DB::table('santris')
+            ->select(
+                'id',
+                'nama_santri as nama',
+                'avatar',
+                'nis',
+            )->latest('santris.created_at')->get();
+
+        return $santri;
+    }
+
+    public static function getProfileSantri($id)
+    {
+        $santri = DB::table('santris')->where('id', '=', $id)->select(
+            'id',
+            'nama_santri as nama',
+            'avatar',
+            'nis',
+            'nik',
+            'gender',
+            'tempat_lahir',
+            'tanggal_lahir',
+            'alamat',
+            'kabupaten',
+            'provinsi',
+        )->first();
+
+        return $santri;
+    }
 }

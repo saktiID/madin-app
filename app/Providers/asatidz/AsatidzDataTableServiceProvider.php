@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace App\Providers\asatidz;
 
 use App\Models\Pengajar;
 use Illuminate\Support\ServiceProvider;
@@ -25,8 +25,8 @@ class AsatidzDataTableServiceProvider extends ServiceProvider
             })->addColumn('telp', function ($asatidz) {
                 return $asatidz->telp;
             })->addColumn('more', function ($asatidz) {
-                $data['user_id'] = $asatidz->user_id;
-                $data['pengajar_id'] = $asatidz->pengajar_id;
+                $data['id'] = $asatidz->user_id;
+                $data['route'] = 'profile-asatidz';
                 $data['nama'] = $asatidz->nama;
                 $element = view('elements.action-button-datatable', $data);
                 return $element;

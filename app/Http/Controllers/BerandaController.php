@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Setting;
-use Illuminate\Http\Request;
+use App\Models\Santri;
+use App\Models\Pengajar;
+use App\Models\Pelajaran;
+use App\Providers\GlobalDataServiceProvider;
 
 class BerandaController extends Controller
 {
@@ -12,6 +14,11 @@ class BerandaController extends Controller
      */
     public function index()
     {
-        return view('beranda');
+        $data = GlobalDataServiceProvider::get();
+        $data['countAsatidz'] = Pengajar::count();
+        $data['countSantri'] = Santri::count();
+        $data['countPelajaran'] = Pelajaran::count();
+
+        return view('beranda', $data);
     }
 }

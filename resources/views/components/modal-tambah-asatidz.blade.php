@@ -131,7 +131,7 @@
                                 </div>
                                 <div class="col-lg-6 col-sm-12">
                                     <div class="mb-3">
-                                        <label for="provinsi_asatidz">ProvinsiAsatidz</label>
+                                        <label for="provinsi_asatidz">Provinsi Asatidz</label>
                                         <input type="text" value="" id="provinsi_asatidz" name="provinsi" class="form-control" required>
                                     </div>
                                 </div>

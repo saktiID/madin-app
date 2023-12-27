@@ -6,11 +6,10 @@
     <div class="col-lg-12 col-md-12 col-12 col-12">
         <div class="row">
 
-            <x-widget-card col="8" theme='widget-engagement' icon='briefcase' title='{{ $nama_madin }}' subtitle='Identitas Madin' url="{{ route('identitas') }}" />
-            <x-widget-card col="4" theme='widget-referral' icon='users' title='15' subtitle='Total Asatidz' url='#' />
-            <x-widget-card col="4" theme='widget-followers' icon='users' title='43' subtitle='Total Santri' url='#' />
-            <x-widget-card col="4" theme='widget-engagement' icon='book' title='16' subtitle='Total Pelajaran' url='#' />
-            <x-widget-card col="4" theme='widget-referral' icon='award' title='6' subtitle='Total Kelas' url='#' />
+            <x-widget-card col="12" theme='widget-engagement' icon='briefcase' title='{{ $nama_madin }}' subtitle='Identitas Madin' url="{{ route('identitas') }}" />
+            <x-widget-card col="4" theme='widget-referral' icon='users' title='{{ $countAsatidz }}' subtitle='Total Asatidz' url="{{ route('data-asatidz') }}" />
+            <x-widget-card col="4" theme='widget-followers' icon='users' title='{{ $countSantri }}' subtitle='Total Santri' url="{{ route('data-santri') }}" />
+            <x-widget-card col="4" theme='widget-engagement' icon='book' title='{{ $countPelajaran }}' subtitle='Total Pelajaran' url="{{ route('data-pelajaran') }}" />
 
         </div>
     </div>

@@ -16,7 +16,7 @@ class SantriSeeder extends Seeder
         Santri::create([
             'id' => Str::uuid(),
             'nama_santri' => 'Muhammad Syakur',
-            'avatar' => '90x90.jpg',
+            'avatar' => 'user-male-90x90.png',
             'nis' => '202312780001',
             'nik' => '3515052506050001',
             'gender' => 'male',
@@ -30,7 +30,7 @@ class SantriSeeder extends Seeder
         Santri::create([
             'id' => Str::uuid(),
             'nama_santri' => 'Karim Junaidi',
-            'avatar' => '90x90.jpg',
+            'avatar' => 'user-male-90x90.png',
             'nis' => '202312780002',
             'nik' => '3515052506050002',
             'gender' => 'male',
@@ -44,7 +44,7 @@ class SantriSeeder extends Seeder
         Santri::create([
             'id' => Str::uuid(),
             'nama_santri' => 'Sinthia Lubis',
-            'avatar' => '90x90.jpg',
+            'avatar' => 'user-female-90x90.png',
             'nis' => '202312780003',
             'nik' => '3515052506060003',
             'gender' => 'female',

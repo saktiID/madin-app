@@ -10,24 +10,24 @@
 
             <div class="col-lg-4 col-sm-12 mb-4">
 
-                <div class="alert alert-outline-primary">
-                    <a href="{{ route('data-asatidz') }}">
+                <a href="{{ route('data-asatidz') }}">
+                    <div class="alert alert-outline-primary">
                         <span>&larr; Kembali ke Data Asatidz</span>
-                    </a>
-                </div>
+                    </div>
+                </a>
 
                 <label>Profile Asatidz</label>
                 <input type="file" accept="image/*" id="avatar_asatidz" name="avatar_asatidz" hidden>
                 <div class="text-center">
                     <div class="avatar avatar-xl mb-4">
-                        <img alt="foto" id="foto" src="{{ route('get-foto', ['filename' => $data_asatidz->avatar]) }}" width="250px" height="250px" class="rounded" />
+                        <img alt="foto" id="foto" src="{{ route('get-foto', ['filename' => $data_asatidz->avatar]) }}" width="250px" height="250px" class="rounded bg-success" />
                     </div>
                     <label for="avatar_asatidz" class="btn btn-outline-primary btn-sm">Ubah foto</label>
                 </div>
 
                 <x-modal-box modalId="uploadImgModal" modalTitle="Upload foto" modalUrl="#" modalSubmitText="Upload">
                     <div class="d-flex justify-content-center">
-                        <img src="" id="previewImg" alt="preview">
+                        <img src="" id="previewImg" alt="preview" height="450px">
                     </div>
                 </x-modal-box>
 
@@ -242,9 +242,9 @@
     @if(session('response'))
     let data = @json(session('response'));
     sweetAlert(data)
-    console.log(data);
     @endif
 
+    // cropper
     const avatar = document.getElementById('previewImg')
     const cropper = new Cropper(avatar, {
         aspectRatio: 1, // Sesuaikan dengan rasio aspek yang Anda inginkan
@@ -294,8 +294,12 @@
                 processData: false, //
                 contentType: false, //
                 success: function(res) {
-                    sweetAlert(res[0])
-                    replaceImg(res[1])
+                    if (res.status) {
+                        sweetAlert(res.data)
+                        replaceImg(res.newImage)
+                    } else {
+                        sweetAlert(res.data)
+                    }
                 }, //
                 error: function(err) {
                     console.log(err.responseText);

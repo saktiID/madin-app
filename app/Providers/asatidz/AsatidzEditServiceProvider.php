@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace App\Providers\asatidz;
 
 use App\Models\Pengajar;
 use App\Models\User;
@@ -24,9 +24,20 @@ class AsatidzEditServiceProvider extends ServiceProvider
             $image = $manager->read($image);
             $image->resize(150, 150);
             $image->toPng()->save(storage_path('app/profile/' . $imageName));
-            User::where('id', $request->id)->update(['avatar' => $imageName]);
 
-            return true;
+            $foto = User::where('id', $request->id)->update(['avatar' => $imageName]);
+
+            if ($oldImage != 'user-male-90x90.png' || $oldImage != 'user-female-90x90.png') {
+                if (file_exists(storage_path('app/profile/' . $oldImage))) {
+                    unlink(storage_path('app/profile/' . $oldImage));
+                }
+            }
+
+            if ($foto) {
+                return true;
+            } else {
+                return false;
+            }
         } catch (Exception $e) {
             return $e;
         }
@@ -93,7 +104,7 @@ class AsatidzEditServiceProvider extends ServiceProvider
         if ($currentNik != $request->nik) {
             // ketika beda jalankan validasi nik
             $request->validate([
-                'nik' => 'unique:users'
+                'nik' => 'unique:pengajars'
             ], [
                 'nik.unique' => 'NIK sudah ada yang menggunakan.'
             ]);

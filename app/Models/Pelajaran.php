@@ -25,6 +25,7 @@ class Pelajaran extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'nama_pelajaran',
         'deskripsi',
         'is_active,'

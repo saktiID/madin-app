@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace App\Providers\asatidz;
 
 use Exception;
 use App\Models\User;

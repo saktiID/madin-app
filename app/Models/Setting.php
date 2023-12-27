@@ -52,9 +52,9 @@ class Setting extends Model
     public static function getAllSettingMadin(): array
     {
         $data = [
-            'logo_madin' => Setting::getSettingMadin('logo_madin'),
-            'nama_madin' => Setting::getSettingMadin('nama_madin'),
-            'alamat_madin' => Setting::getSettingMadin('alamat_madin'),
+            // 'logo_madin' => Setting::getSettingMadin('logo_madin'),
+            // 'nama_madin' => Setting::getSettingMadin('nama_madin'),
+            // 'alamat_madin' => Setting::getSettingMadin('alamat_madin'),
             'kota_madin' => Setting::getSettingMadin('kota_madin'),
             'kode_pos_madin' => Setting::getSettingMadin('kode_pos_madin'),
             'telp_madin' => Setting::getSettingMadin('telp_madin'),

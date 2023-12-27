@@ -1,12 +1,14 @@
 <?php
 
-use App\Http\Controllers\Admin\DataAsatidzController;
-use App\Http\Controllers\Admin\IdentitasController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\FotoGetterController;
 use App\Http\Controllers\PeriodeSetterController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\IdentitasController;
+use App\Http\Controllers\Admin\DataSantriController;
+use App\Http\Controllers\Admin\DataAsatidzController;
+use App\Http\Controllers\Admin\DataPelajaranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,8 +48,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/data-asatidz/foto', [DataAsatidzController::class, 'foto'])->name('foto-asatidz');
         Route::post('/data-asatidz/hapus', [DataAsatidzController::class, 'hapus'])->name('hapus-asatidz');
 
-        Route::get('/data-santri', [DataAsatidzController::class, 'index'])->name('data-santri');
-        Route::get('/data-pelajaran', [DataAsatidzController::class, 'index'])->name('data-pelajaran');
+        Route::get('/data-santri', [DataSantriController::class, 'index'])->name('data-santri');
+        Route::get('/data-santri/{id}', [DataSantriController::class, 'detail'])->name('profile-santri');
+        Route::post('/data-santri/tambah', [DataSantriController::class, 'tambah'])->name('tambah-santri');
+        Route::post('/data-santri/edit', [DataSantriController::class, 'edit'])->name('edit-santri');
+        Route::post('/data-santri/foto', [DataSantriController::class, 'foto'])->name('foto-santri');
+        Route::post('/data-santri/hapus', [DataSantriController::class, 'hapus'])->name('hapus-santri');
+
+        Route::get('/data-pelajaran', [DataPelajaranController::class, 'index'])->name('data-pelajaran');
+
         Route::get('/data-kelas', [DataAsatidzController::class, 'index'])->name('data-kelas');
         Route::get('/data-periode', [DataAsatidzController::class, 'index'])->name('data-periode');
     });

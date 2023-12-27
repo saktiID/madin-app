@@ -1,40 +1,35 @@
 @extends('layout.main')
-@section('title', 'Data Asatidz')
+@section('title', 'Data Santri')
 @section('content')
 <div class="row">
 
-    <x-card-box cardTitle="Data Asatidz">
+    <x-card-box cardTitle="Data Santri">
 
         <div class="row mb-3">
             <div class="col mx-3">
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-info btn-sm"><i data-feather="share-2" class="mr-2"></i> Export</button>
-                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambahAsatidzModal"><i data-feather="user-plus" class="mr-2"></i> Tambah</button>
+                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambahSantriModal"><i data-feather="user-plus" class="mr-2"></i> Tambah</button>
                 </div>
             </div>
         </div>
 
-        <x-datatable-responsive tableId="data-asatidz">
+        <x-datatable-responsive tableId="data-santri">
             <thead>
                 <tr class="text-center">
                     <th>No</th>
                     <th>Foto</th>
                     <th>Nama</th>
-                    <th>Email</th>
-                    <th>Telepon</th>
+                    <th>NIS</th>
                     <th><i data-feather="more-horizontal"></i></th>
                 </tr>
             </thead>
         </x-datatable-responsive>
 
-
     </x-card-box>
 
-
-
     {{-- modal --}}
-    <x-modal-tambah-asatidz />
-
+    <x-modal-tambah-santri />
 
 
 </div>
@@ -46,7 +41,6 @@
 <link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert.css') }}">
 @endsection
 
-
 @section('script')
 <script src="{{ asset('plugins/table/datatable/datatables.js') }}"></script>
 <script src="{{ asset('plugins/input-mask/jquery.inputmask.bundle.min.js') }}"></script>
@@ -55,25 +49,26 @@
 <script>
     $(document).ready(function() {
         loadData()
-        $("#tanggal_lahir_asatidz").inputmask("99/99/9999");
+        $("#tanggal_lahir").inputmask("99/99/9999");
         const tambahTrigger = document.getElementById('tambahTrigger')
 
         $(document).on('click', '.hapus-data', function(e) {
             e.preventDefault()
             let id = $(this).attr('data-id')
             let nama = $(this).attr('data-nama')
-            deleteAsatidz(id, nama)
+            deleteSantri(id, nama)
         })
-    });
+
+    })
 
     function loadData() {
-        $('#data-asatidz').DataTable({
+        $('#data-santri').DataTable({
             processing: true, //
             pagination: true, //
             serverSide: true, //
             searching: true, //
             ajax: {
-                url: "{{ route('data-asatidz') }}", //
+                url: "{{ route('data-santri') }}", //
             }, //
             columns: [{
                     data: 'DT_RowIndex', //
@@ -89,10 +84,7 @@
                     data: 'nama'
                 }, //
                 {
-                    data: 'email'
-                }, //
-                {
-                    data: 'telp'
+                    data: 'nis'
                 }, //
                 {
                     data: 'more'
@@ -101,7 +93,7 @@
         })
     }
 
-    $("form.tambah-asatidz").on("submit", function(event) {
+    $("form.tambah-santri").on("submit", function(event) {
         event.preventDefault()
         let data = $(this).serializeArray()
         serrialAssoc(data)
@@ -112,8 +104,8 @@
         let formData = new FormData()
         data.forEach(element => {
             formData.append(element.name, element.value)
-        });
-        prosesAjax(formData, "{{ route('tambah-asatidz') }}")
+        })
+        prosesAjax(formData, "{{ route('tambah-santri') }}")
     }
 
     function prosesAjax(data, route) {
@@ -153,9 +145,9 @@
             onfinish()
         } else {
             sweetAlert(res.data)
-            document.querySelector("form.tambah-asatidz").reset();
-            $('#tambahAsatidzModal').modal('hide')
-            $('#data-asatidz').DataTable().ajax.reload()
+            document.querySelector("form.tambah-santri").reset();
+            $('#tambahSantriModal').modal('hide')
+            $('#data-santri').DataTable().ajax.reload()
             onfinish()
         }
     }
@@ -181,11 +173,11 @@
         tambahTrigger.replaceChild(span, tambahTrigger.childNodes[0])
     }
 
-    function deleteAsatidz(id, nama) {
+    function deleteSantri(id, nama) {
         swal({
             type: 'warning', //
-            title: 'Hapus Asatidz', //
-            html: `Menghapus Asatidz ${nama}?`, //
+            title: 'Hapus Santri', //
+            html: `Menghapus Santri ${nama}?`, //
             showCancelButton: true, //
             confirmButtonText: 'Hapus', //
         }).then((result) => {
@@ -194,7 +186,7 @@
                 formData.append('_token', "{{ csrf_token() }}")
                 formData.append('id', id)
                 formData.append('nama', nama)
-                prosesAjax(formData, "{{ route('hapus-asatidz') }}")
+                prosesAjax(formData, "{{ route('hapus-santri') }}")
             }
         })
     }

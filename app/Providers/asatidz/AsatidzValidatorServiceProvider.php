@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace App\Providers\asatidz;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
@@ -12,14 +12,16 @@ class AsatidzValidatorServiceProvider extends ServiceProvider
         $validator = Validator::make($data->all(), [
             'email' => 'required|unique:users',
             'password' => 'confirmed|min:5',
-            'nik' => 'min:16',
+            'nik' => 'min:16|max:16|unique:pengajars',
             'telp' => 'min:10'
         ], [
             'email.required' => 'Email harus diisi.',
             'email.unique' => 'Email sudah ada yang menggunakan.',
             'password.confirmed' => 'Password tidak sama.',
             'password.min' => 'Password kurang dari 5 karakter.',
+            'nik.max' => 'NIK lebih dari 16 digit.',
             'nik.min' => 'NIK kurang dari 16 digit.',
+            'nik.unique' => 'NIK sudah ada yang menggunakan.',
             'telp.min' => 'Nomor telepon kurang dari 10 digit.'
         ]);
 

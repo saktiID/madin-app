@@ -79,14 +79,45 @@ class DataSantriController extends Controller
      */
     public function edit(Request $request)
     {
+        // baris code validator
+        $current = Santri::where('id', $request->id)->select(['nik', 'nis'])->first();
+        $currentNik = $current->nik;
+        $currentNis = $current->nis;
+
+        if ($currentNik != $request->nik) {
+            $validatorNik = SantriValidator::nik($request);
+            if ($validatorNik->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'data' => $validatorNik->errors()
+                ]);
+            }
+        }
+
+        if ($currentNis != $request->nis) {
+            $validatorNis = SantriValidator::nis($request);
+            if ($validatorNis->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'data' => $validatorNis->errors()
+                ]);
+            }
+        }
+
         // baris code validator nik dan nis sekaligus update record santri
         $update = SantriEdit::biodata($request);
         if ($update) {
             $msg = AlertResponse::response('success', 'Berhasil mengubah data Santri! <br>' . $request->nama);
-            return redirect()->back()->with('response', $msg);
+            return response()->json([
+                'status' => true,
+                'data' => $msg
+            ]);
         } else {
             $msg = AlertResponse::response('error', 'Gagal mengubah data Santri! <br>' . $request->nama);
-            return redirect()->back()->with('response', $msg);
+            return response()->json([
+                'status' => true,
+                'data' => $msg
+            ]);
         }
     }
 

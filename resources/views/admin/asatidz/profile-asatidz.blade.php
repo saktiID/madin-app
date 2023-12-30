@@ -35,7 +35,7 @@
 
 
             <div class="col-lg-8 col-sm-12">
-                <form method="POST" action="{{ route('edit-credential-asatidz') }}" class="mb-4">
+                <form method="POST" action="{{ route('edit-credential-asatidz') }}" class="form-credential mb-4">
                     @csrf
 
                     <input type="text" name="user_id" id="user_id" value="{{ $data_asatidz->user_id }}" hidden>
@@ -97,7 +97,7 @@
                     </div>
                 </form>
 
-                <form method="POST" action="{{ route('edit-biodata-asatidz') }}">
+                <form method="POST" action="{{ route('edit-biodata-asatidz') }}" class="form-biodata">
                     @csrf
 
                     <input type="text" name="pengajar_id" id="pengajar_id" value="{{ $data_asatidz->pengajar_id }}" hidden>
@@ -202,7 +202,6 @@
 <x-sweet-alert />
 <script>
     $("#tanggal_lahir_asatidz").inputmask("99/99/9999")
-    const divError = document.createElement('div')
 
     const submitSimpanCredentialBtn = document.querySelector('button[type="submit"].simpan-credential')
     const submitSimpanBiodataBtn = document.querySelector('button[type="submit"].simpan-biodata')
@@ -218,31 +217,80 @@
         submitSimpanBiodataBtn.replaceChild(spinner, submitSimpanBiodataBtn.childNodes[0])
     })
 
-    @error('email')
-    const p1 = document.createElement('span')
-    p1.innerHTML = '{{ $message }} <br>'
-    divError.appendChild(p1)
-    @enderror
+    $('form.form-credential').on('submit', function(e) {
+        e.preventDefault();
+        let data = $(this).serializeArray()
+        serrialAssoc(data, "{{ route('edit-credential-asatidz') }}")
+    })
 
-    @error('password')
-    const p2 = document.createElement('span')
-    p2.innerHTML = '{{ $message }}'
-    divError.appendChild(p2)
-    @enderror
+    $('form.form-biodata').on('submit', function(e) {
+        e.preventDefault();
+        let data = $(this).serializeArray()
+        serrialAssoc(data, "{{ route('edit-biodata-asatidz') }}")
+    })
 
-    if (divError.hasChildNodes()) {
+    function serrialAssoc(data, route) {
+        let formData = new FormData()
+        data.forEach(element => {
+            formData.append(element.name, element.value)
+        })
+        prosesAjax(formData, route);
+    }
+
+    function prosesAjax(data, route) {
+        $.ajax({
+            url: route, //
+            method: 'POST', //
+            data: data, //
+            dataType: 'json', //
+            processData: false, //
+            contentType: false, //
+            success: function(res) {
+                feedback(res)
+            }, //
+            error: function(err) {
+                console.log(err.responseText)
+                errorClientSide(err.responseText)
+            }
+        });
+    }
+
+    function feedback(res) {
+        if (!res.status) {
+            const divError = document.createElement('div')
+            for (let key in res.data) {
+                res.data[key].forEach((e) => {
+                    let span = document.createElement('span')
+                    span.innerHTML = e + '<br>'
+                    divError.appendChild(span)
+                })
+            }
+            let data = {
+                icon: 'error', //
+                title: 'Oops!', //
+                html: divError
+            }
+            sweetAlert(data)
+            onfinish()
+        } else {
+            sweetAlert(res.data)
+            onfinish()
+        }
+    }
+
+    function errorClientSide(err) {
         let data = {
             icon: 'error', //
             title: 'Oops!', //
-            html: divError
+            html: err
         }
         sweetAlert(data)
     }
 
-    @if(session('response'))
-    let data = @json(session('response'));
-    sweetAlert(data)
-    @endif
+    function onfinish() {
+        submitSimpanCredentialBtn.innerHTML = 'Simpan'
+        submitSimpanBiodataBtn.innerHTML = 'Simpan'
+    }
 
     // cropper
     const avatar = document.getElementById('previewImg')

@@ -14,19 +14,35 @@ class SettingServiceProvider extends ServiceProvider
     public static function updateSetting($request)
     {
         try {
-            Setting::setSettingMadin('nama_madin', $request->nama_madin);
-            Setting::setSettingMadin('alamat_madin', $request->alamat_madin);
-            Setting::setSettingMadin('kota_madin', $request->kota_madin);
-            Setting::setSettingMadin('kode_pos_madin', $request->kode_pos_madin);
-            Setting::setSettingMadin('telp_madin', $request->telp_madin);
-            Setting::setSettingMadin('email_madin', $request->email_madin);
-            Setting::setSettingMadin('nomor_statistik_madin', $request->nomor_statistik_madin);
-            Setting::setSettingMadin('nomor_notaris_madin', $request->nomor_notaris_madin);
-            Setting::setSettingMadin('nama_kepala_madin', $request->nama_kepala_madin);
-            Setting::setSettingMadin('nama_bendahara_madin', $request->nama_bendahara_madin);
-            Setting::setSettingMadin('nama_sekretaris_madin', $request->nama_sekretaris_madin);
+            $nama = Setting::setSettingMadin('nama_madin', $request->nama_madin);
+            $alamat = Setting::setSettingMadin('alamat_madin', $request->alamat_madin);
+            $kota =  Setting::setSettingMadin('kota_madin', $request->kota_madin);
+            $kode_pos = Setting::setSettingMadin('kode_pos_madin', $request->kode_pos_madin);
+            $telp = Setting::setSettingMadin('telp_madin', $request->telp_madin);
+            $email =  Setting::setSettingMadin('email_madin', $request->email_madin);
+            $statistik =  Setting::setSettingMadin('nomor_statistik_madin', $request->nomor_statistik_madin);
+            $notaris =  Setting::setSettingMadin('nomor_notaris_madin', $request->nomor_notaris_madin);
+            $kepala =  Setting::setSettingMadin('nama_kepala_madin', $request->nama_kepala_madin);
+            $bendahara =  Setting::setSettingMadin('nama_bendahara_madin', $request->nama_bendahara_madin);
+            $sekretaris =  Setting::setSettingMadin('nama_sekretaris_madin', $request->nama_sekretaris_madin);
 
-            return true;
+            if (
+                $nama &&
+                $alamat &&
+                $kota &&
+                $kode_pos &&
+                $telp &&
+                $email &&
+                $statistik &&
+                $notaris &&
+                $kepala &&
+                $bendahara &&
+                $sekretaris
+            ) {
+                return true;
+            } else {
+                return false;
+            }
         } catch (Exception $e) {
             return $e;
         }

@@ -33,7 +33,7 @@
 
 
             <div class="col-lg-8 col-sm-12">
-                <form method="POST" action="{{ route('edit-santri') }}" class="mb-4">
+                <form method="POST" action="{{ route('edit-santri') }}" class="form-biodata mb-4">
                     @csrf
 
                     <input type="text" name="id" value="{{ $santri->id }}" hidden>
@@ -142,8 +142,6 @@
 <x-sweet-alert />
 <script>
     $("#tanggal_lahir").inputmask("99/99/9999")
-    const divError = document.createElement('div')
-
     const submitSimpanBiodataBtn = document.querySelector('button[type="submit"].simpan-biodata')
     submitSimpanBiodataBtn.addEventListener('click', () => {
         const spinner = document.createElement('div')
@@ -151,31 +149,75 @@
         submitSimpanBiodataBtn.replaceChild(spinner, submitSimpanBiodataBtn.childNodes[0])
     })
 
-    @error('nik')
-    const p1 = document.createElement('span')
-    p1.innerHTML = '{{ $message }} <br>'
-    divError.appendChild(p1)
-    @enderror
+    $('form.form-biodata').on('submit', function(e) {
+        e.preventDefault()
+        let data = $(this).serializeArray()
+        serrialAssoc(data)
+    })
 
-    @error('nis')
-    const p2 = document.createElement('span')
-    p2.innerHTML = '{{ $message }}'
-    divError.appendChild(p2)
-    @enderror
+    function serrialAssoc(data) {
+        let formData = new FormData()
+        data.forEach(element => {
+            formData.append(element.name, element.value)
+        })
+        prosesAjax(formData, "{{ route('edit-santri') }}")
+    }
 
-    if (divError.hasChildNodes()) {
+    function prosesAjax(data, route) {
+        $.ajax({
+            url: route, //
+            method: 'POST', //
+            data: data, //
+            dataType: 'json', //
+            processData: false, //
+            contentType: false, //
+            success: function(res) {
+                feedback(res)
+            }, //
+            error: function(err) {
+                console.log(err.responseText)
+                errorClientSide(err.responseText)
+            }
+        });
+    }
+
+    function feedback(res) {
+        if (!res.status) {
+            const divError = document.createElement('div')
+            for (let key in res.data) {
+                res.data[key].forEach((e) => {
+                    let span = document.createElement('span')
+                    span.innerHTML = e + '<br>'
+                    divError.appendChild(span)
+                })
+            }
+            let data = {
+                icon: 'error', //
+                title: 'Oops!', //
+                html: divError
+            }
+            sweetAlert(data)
+            onfinish()
+        } else {
+            sweetAlert(res.data)
+            onfinish()
+        }
+    }
+
+    function errorClientSide(err) {
         let data = {
             icon: 'error', //
             title: 'Oops!', //
-            html: divError
+            html: err
         }
         sweetAlert(data)
     }
 
-    @if(session('response'))
-    let data = @json(session('response'));
-    sweetAlert(data)
-    @endif
+    function onfinish() {
+        let span = document.createElement('span')
+        span.innerHTML = 'Simpan'
+        submitSimpanBiodataBtn.replaceChild(span, submitSimpanBiodataBtn.childNodes[0])
+    }
 
     // cropper
     const avatar = document.getElementById('previewImg')

@@ -45,72 +45,47 @@ class AsatidzEditServiceProvider extends ServiceProvider
 
     public static function password($request)
     {
-        // cek apakah ada password
-        if ($request->password || $request->password_confirmation) {
-            $request->validate([
-                'password' => 'required|min:5|confirmed'
-            ], [
-                'password.confirmed' => 'Password tidak sama.',
-                'password.required' => 'Kolom password tidak boleh kosong.',
-                'password.min' => 'Kolom password kurang dari 5 karakter.',
-            ]);
+        $updatePassword = User::where('id', $request->user_id)
+            ->update(['password' => $request->password]);
 
-
-            $updatePassword = User::where('id', $request->user_id)
-                ->update(['password' => $request->password]);
-
-            if ($updatePassword) {
-                return true;
-            }
+        if ($updatePassword) {
+            return true;
+        } else {
+            return false;
         }
     }
 
     public static function email($request)
     {
-        // cek email saat ini
-        $currentEmail = User::where('id', $request->user_id)->first();
-        $currentEmail = $currentEmail->email;
+        $updateEmail = User::where('id', $request->user_id)
+            ->update(['email' => $request->email,]);
 
-        // cek apakah email saat ini dan baru itu sama
-        if ($currentEmail != $request->email) {
-            // ketika beda jalankan validasi email
-            $request->validate([
-                'email' => 'unique:users'
-            ], [
-                'email.unique' => 'Email sudah ada yang menggunakan.'
-            ]);
+        if ($updateEmail) {
+            return true;
+        } else {
+            return false;
         }
+    }
 
+    public static function userdata($request)
+    {
         $updateUser = User::where('id', $request->user_id)
             ->update([
-                'email' => $request->email,
                 'nama' => $request->nama,
-                'gender' => $request->gender,
                 'role' => $request->role,
+                'gender' => $request->gender
             ]);
 
         if ($updateUser) {
             return true;
+        } else {
+            return false;
         }
     }
 
-    public static function nik($request)
+    public static function biodata($request)
     {
-        // cek nik saat ini
-        $currentNik = Pengajar::where('id', $request->pengajar_id)->first();
-        $currentNik = $currentNik->nik;
-
-        // cek apakah nik saat ini dan baru itu sama
-        if ($currentNik != $request->nik) {
-            // ketika beda jalankan validasi nik
-            $request->validate([
-                'nik' => 'unique:pengajars'
-            ], [
-                'nik.unique' => 'NIK sudah ada yang menggunakan.'
-            ]);
-        }
-
-        $updatePengajar = Pengajar::where('id', $request->pengajar_id)
+        $updateBiodata = Pengajar::where('id', $request->pengajar_id)
             ->update([
                 'nik' => $request->nik,
                 'tempat_lahir' => $request->tempat_lahir,
@@ -123,8 +98,10 @@ class AsatidzEditServiceProvider extends ServiceProvider
                 'provinsi' => $request->provinsi,
             ]);
 
-        if ($updatePengajar) {
+        if ($updateBiodata) {
             return true;
+        } else {
+            return false;
         }
     }
 }

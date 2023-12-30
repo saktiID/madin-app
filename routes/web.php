@@ -56,6 +56,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/data-santri/hapus', [DataSantriController::class, 'hapus'])->name('hapus-santri');
 
         Route::get('/data-pelajaran', [DataPelajaranController::class, 'index'])->name('data-pelajaran');
+        Route::get('/data-pelajaran/{id}', [DataPelajaranController::class, 'detail'])->name('detail-pelajaran');
+        Route::post('/data-pelajaran/tambah', [DataPelajaranController::class, 'tambah'])->name('tambah-pelajaran');
+        Route::post('/data-pelajaran/edit', [DataPelajaranController::class, 'edit'])->name('edit-pelajaran');
+        Route::post('/data-pelajaran/activate', [DataPelajaranController::class, 'activate'])->name('activate-pelajaran');
+        Route::post('/data-pelajaran/hapus', [DataPelajaranController::class, 'hapus'])->name('hapus-pelajaran');
 
         Route::get('/data-kelas', [DataAsatidzController::class, 'index'])->name('data-kelas');
         Route::get('/data-periode', [DataAsatidzController::class, 'index'])->name('data-periode');

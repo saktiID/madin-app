@@ -33,8 +33,11 @@ class SantriTambahServiceProvider extends ServiceProvider
                 'kabupaten' => $request->kabupaten,
                 'provinsi' => $request->provinsi,
             ]);
-
-            return true;
+            if ($tambah) {
+                return true;
+            } else {
+                return false;
+            }
         } catch (Exception $e) {
             return $e;
         }

@@ -18,7 +18,7 @@
 
 {{-- modal --}}
 @section('modal')
-<x-modal-box modalId="logoutModal" modalTitle="Keluar" modalUrl="{{ route('logout') }}" modalSubmitText="Tetap keluar" classSubmit="danger">
+<x-modal-box modalId="logoutModal" modalTitle="Keluar" modalUrl="{{ route('logout') }}" modalSubmitText="Tetap keluar" classSubmit="danger logout">
     <p>Apakah yakin akan keluar?</p>
 </x-modal-box>
 @endsection

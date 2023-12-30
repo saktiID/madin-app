@@ -8,6 +8,13 @@
 <script>
     $(document).ready(function() {
         App.init();
+
+        $('.logout').click(function(e) {
+            const spinner = document.createElement('div')
+            spinner.classList = "spinner-border text-white align-self-center loader-sm"
+            this.replaceChild(spinner, this.firstChild)
+        })
+
     });
 
 </script>

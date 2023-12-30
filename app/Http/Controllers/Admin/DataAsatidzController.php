@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\User;
 use App\Models\Pengajar;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,11 +17,13 @@ use App\Providers\asatidz\AsatidzValidatorServiceProvider as AsatidzValidator;
 class DataAsatidzController extends Controller
 {
     /**
-     * method data asatidz index
+     * index method data asatidz index
+     *
+     * @param  mixed $request
+     * @return void
      */
     public function index(Request $request)
     {
-
         $data = GlobalDataServiceProvider::get();
 
         if ($request->ajax()) {
@@ -29,9 +32,11 @@ class DataAsatidzController extends Controller
         return view('admin.asatidz.data-asatidz', $data);
     }
 
-
     /**
-     * method controller detail profile
+     * detail method controller detail profile
+     *
+     * @param  mixed $id
+     * @return void
      */
     public function detail($id)
     {
@@ -42,7 +47,10 @@ class DataAsatidzController extends Controller
     }
 
     /**
-     * method controller tambah asatidz
+     * tambah method controller tambah asatidz
+     *
+     * @param  mixed $request
+     * @return void
      */
     public function tambah(Request $request)
     {
@@ -74,46 +82,125 @@ class DataAsatidzController extends Controller
     }
 
     /**
-     * method controller edit credential asatidz
+     * editCredential method controller edit credential asatidz
+     *
+     * @param  mixed $request
+     * @return void
      */
     public function editCredential(Request $request)
     {
-        // cek apakah ada password
-        $cekPassword = AsatidzEdit::password($request);
-        if ($cekPassword) {
-            $msg = AlertResponse::response('success', 'Berhasil mengubah password! <br>' . $request->nama);
-            return redirect()->back()->with('response', $msg);
+        // baris code cek password
+        if ($request->password || $request->password_confirmation) {
+            $validator = AsatidzValidator::password($request);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'data' => $validator->errors()
+                ]);
+            } else {
+                $update = AsatidzEdit::password($request);
+                if ($update) {
+                    $msg = AlertResponse::response('success', 'Berhasil mengubah password Asatidz! <br>' . $request->nama);
+                    return response()->json([
+                        'status' => true,
+                        'data' => $msg
+                    ]);
+                } else {
+                    $msg = AlertResponse::response('error', 'Gagal mengubah password Asatidz! <br>' . $request->nama);
+                    return response()->json([
+                        'status' => true,
+                        'data' => $msg
+                    ]);
+                }
+            }
         }
 
-        // cek email dan update credential
-        $updateUser = AsatidzEdit::email($request);
+        // baris code cek email
+        $currentEmail = User::where('id', $request->user_id)->select('email')->first();
+        if ($currentEmail->email != $request->email) {
+            $validatorEmail = AsatidzValidator::email($request);
+            if ($validatorEmail->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'data' => $validatorEmail->errors()
+                ]);
+            } else {
+                $updateEmail = AsatidzEdit::email($request);
+                if ($updateEmail) {
+                    $msg = AlertResponse::response('success', 'Berhasil mengubah email Asatidz! <br>' . $request->nama);
+                    return response()->json([
+                        'status' => true,
+                        'data' => $msg
+                    ]);
+                } else {
+                    $msg = AlertResponse::response('error', 'Gagal mengubah email Asatidz! <br>' . $request->nama);
+                    return response()->json([
+                        'status' => true,
+                        'data' => $msg
+                    ]);
+                }
+            }
+        }
+
+        // baris code update user
+        $updateUser = AsatidzEdit::userdata($request);
         if ($updateUser) {
-            $msg = AlertResponse::response('success', 'Berhasil mengubah credential! <br>' . $request->nama);
-            return redirect()->back()->with('response', $msg);
+            $msg = AlertResponse::response('success', 'Berhasil mengubah credential Asatidz! <br>' . $request->nama);
+            return response()->json([
+                'status' => true,
+                'data' => $msg
+            ]);
         } else {
-            $msg = AlertResponse::response('error', 'Gagal mengubah credential! <br>' . $request->nama);
-            return redirect()->back()->with('response', $msg);
+            $msg = AlertResponse::response('error', 'Gagal mengubah credenial Asatidz! <br>' . $request->nama);
+            return response()->json([
+                'status' => true,
+                'data' => $msg
+            ]);
         }
     }
 
     /**
-     * method controller edit biodata asatidz
+     * editBiodata method controller edit biodata asatidz
+     *
+     * @param  mixed $request
+     * @return void
      */
     public function editBiodata(Request $request)
     {
-        // cek nik dan update biodata
-        $updatePengajar = AsatidzEdit::nik($request);
-        if ($updatePengajar) {
-            $msg = AlertResponse::response('success', 'Berhasil mengubah biodata! <br>' . $request->nama);
-            return redirect()->back()->with('response', $msg);
+        // baris code cek nik
+        $currentNik = Pengajar::where('id', $request->pengajar_id)->select('nik')->first();
+        if ($currentNik->nik != $request->nik) {
+            $validator = AsatidzValidator::nik($request);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'data' => $validator->errors()
+                ]);
+            }
+        }
+
+        // baris code update biodata
+        $updateBiodata = AsatidzEdit::biodata($request);
+        if ($updateBiodata) {
+            $msg = AlertResponse::response('success', 'Berhasil mengubah biodata Asatidz! <br>' . $request->nama);
+            return response()->json([
+                'status' => true,
+                'data' => $msg
+            ]);
         } else {
-            $msg = AlertResponse::response('error', 'Gagal mengubah biodata! <br>' . $request->nama);
-            return redirect()->back()->with('response', $msg);
+            $msg = AlertResponse::response('error', 'Gagal mengubah biodata Asatidz! <br>' . $request->nama);
+            return response()->json([
+                'status' => true,
+                'data' => $msg
+            ]);
         }
     }
 
     /**
-     * method controller foto asatidz
+     * foto method controller foto asatidz
+     *
+     * @param  mixed $request
+     * @return void
      */
     public function foto(Request $request)
     {
@@ -139,7 +226,10 @@ class DataAsatidzController extends Controller
     }
 
     /**
-     * method controller hapus asatidz
+     * hapus method controller hapus asatidz
+     *
+     * @param  mixed $request
+     * @return void
      */
     public function hapus(Request $request)
     {

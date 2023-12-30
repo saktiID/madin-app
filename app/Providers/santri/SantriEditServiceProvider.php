@@ -43,26 +43,6 @@ class SantriEditServiceProvider extends ServiceProvider
 
     public static function biodata($request)
     {
-        $currentNik = Santri::where('id', $request->id)->select('nik')->first();
-        $currentNik = $currentNik->nik;
-
-        $currentNis = Santri::where('id', $request->id)->select('nis')->first();
-        $currentNis = $currentNis->nis;
-
-        if ($currentNik != $request->nik || $currentNis != $request->nis) {
-            $request->validate([
-                'nis' => 'required|unique:santris',
-                'nik' => 'required|min:16|max:16|unique:santris',
-            ], [
-                'nis.required' => 'NIS tidak boleh kosong.',
-                'nis.unique' => 'NIS sudah ada yang menggunakan.',
-                'nik.unique' => 'NIK sudah ada yang menggunakan.',
-                'nik.min' => 'NIK kurang dari 16 karakter.',
-                'nik.max' => 'NIK lebih dari 16 karakter.',
-            ]);
-        }
-
-
         $updateSantri = Santri::where('id', $request->id)
             ->update([
                 'nama_santri' => $request->nama,
@@ -78,6 +58,8 @@ class SantriEditServiceProvider extends ServiceProvider
 
         if ($updateSantri) {
             return true;
+        } else {
+            return false;
         }
     }
 }

@@ -39,10 +39,13 @@ class DataKelasController extends Controller
         $data['kelas'] = Kelas::select(['id', 'nama_kelas', 'jenjang_kelas', 'bagian_kelas', 'mustahiq_id'])
             ->where('id', $request->id)->first();
 
-
         if ($data['kelas']->mustahiq_id) {
             $data['mustahiq'] = User::select(['id', 'nama', 'avatar'])
                 ->where('id', $data['kelas']->mustahiq_id)->first();
+        }
+
+        if ($request->ajax()) {
+            //
         }
 
         return view('admin.kelas.detail-kelas', $data);

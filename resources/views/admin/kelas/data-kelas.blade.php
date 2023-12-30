@@ -1,26 +1,25 @@
 @extends('layout.main')
-@section('title', 'Data Pelajaran')
+@section('title', 'Data Kelas')
 @section('content')
 <div class="row">
 
-    <x-card-box cardTitle="Data Pelajaran">
+    <x-card-box cardTitle="Data Kelas">
 
         <div class="row mb-3">
             <div class="col mx-3">
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-info btn-sm"><i data-feather="share-2" class="mr-2"></i> Export</button>
-                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambahPelajaranModal"><i data-feather="file-plus" class="mr-2"></i> Tambah</button>
+                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambahKelasModal"><i data-feather="file-plus" class="mr-2"></i> Tambah</button>
                 </div>
             </div>
         </div>
 
-        <x-datatable-responsive tableId="data-pelajaran">
+        <x-datatable-responsive tableId="data-kelas">
             <thead>
                 <tr class="text-center">
                     <th>No</th>
-                    <th>Nama Pelajaran</th>
-                    <th>Deskripsi</th>
-                    <th>Status</th>
+                    <th>Jenjang</th>
+                    <th>Kelas</th>
+                    <th>Bagian</th>
                     <th><i data-feather="more-horizontal"></i></th>
                 </tr>
             </thead>
@@ -29,23 +28,22 @@
     </x-card-box>
 
     {{-- modal --}}
-    <x-modal-tambah-pelajaran />
+    <x-modal-tambah-kelas periodeId="{{ $currentPeriode['id'] }}" semester="{{ $currentPeriode['semester'] }}" tahun="{{ $currentPeriode['tahun_ajaran'] }}" />
 
 </div>
 @endsection
-
 
 @section('style')
 <link rel="stylesheet" href="{{ asset('plugins/table/datatable/datatables.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/css/forms/switches.css') }}">
 @endsection
 
 @section('script')
 <script src="{{ asset('plugins/table/datatable/datatables.js') }}"></script>
 <script src="{{ asset('plugins/sweetalerts/sweetalert2.min.js') }}"></script>
 <x-sweet-alert />
+
 <script>
     $(document).ready(function() {
         loadData()
@@ -54,25 +52,18 @@
             e.preventDefault()
             let id = $(this).attr('data-id')
             let nama = $(this).attr('data-nama')
-            deletePelajran(id, nama)
-        })
-
-        $(document).on('click', '.activate', function(e) {
-            let is_checked = $(this).prop('checked')
-            let id = $(this).attr('data-id')
-            let nama = $(this).attr('data-nama')
-            activatePelajaran(id, is_checked, nama)
+            deleteKelas(id, nama)
         })
     })
 
     function loadData() {
-        $('#data-pelajaran').DataTable({
+        $('#data-kelas').DataTable({
             processing: true, //
             pagination: true, //
             serverSide: true, //
             searching: true, //
             ajax: {
-                url: "{{ route('data-pelajaran') }}", //
+                url: "{{ route('data-kelas') }}", //
             }, //
             columns: [{
                     data: 'DT_RowIndex', //
@@ -82,13 +73,15 @@
                     className: 'text-center'
                 }, //
                 {
-                    data: 'nama_pelajaran'
+                    data: 'jenjang_kelas', ///
+                    className: 'text-center'
                 }, //
                 {
-                    data: 'deskripsi'
+                    data: 'nama_kelas'
                 }, //
                 {
-                    data: 'is_active'
+                    data: 'bagian_kelas', //
+                    className: 'text-center'
                 }, //
                 {
                     data: 'more'
@@ -97,8 +90,8 @@
         })
     }
 
-    $("form.tambah-pelajaran").on("submit", function(event) {
-        event.preventDefault()
+    $('form.tambah-kelas').on('submit', function(e) {
+        e.preventDefault();
         let data = $(this).serializeArray()
         serrialAssoc(data)
         onload()
@@ -109,7 +102,7 @@
         data.forEach(element => {
             formData.append(element.name, element.value)
         })
-        prosesAjax(formData, "{{ route('tambah-pelajaran') }}")
+        prosesAjax(formData, "{{ route('tambah-kelas') }}")
     }
 
     function prosesAjax(data, route) {
@@ -149,9 +142,9 @@
             onfinish()
         } else {
             sweetAlert(res.data)
-            document.querySelector("form.tambah-pelajaran").reset();
-            $('#tambahPelajaranModal').modal('hide')
-            $('#data-pelajaran').DataTable().ajax.reload()
+            document.querySelector("form.tambah-kelas").reset();
+            $('#tambahKelasModal').modal('hide')
+            $('#data-kelas').DataTable().ajax.reload()
             onfinish()
         }
     }
@@ -177,11 +170,11 @@
         tambahTrigger.replaceChild(span, tambahTrigger.childNodes[0])
     }
 
-    function deletePelajran(id, nama) {
+    function deleteKelas(id, nama) {
         swal({
             type: 'warning', //
-            title: 'Hapus Pelajaran', //
-            html: `Menghapus pelajaran ${nama}?`, //
+            title: 'Hapus Kelas', //
+            html: `Menghapus kelas ${nama}?`, //
             showCancelButton: true, //
             confirmButtonText: 'Hapus', //
         }).then((result) => {
@@ -190,20 +183,16 @@
                 formData.append('_token', "{{ csrf_token() }}")
                 formData.append('id', id)
                 formData.append('nama_pelajaran', nama)
-                prosesAjax(formData, "{{ route('hapus-pelajaran') }}")
+                prosesAjax(formData, "{{ route('hapus-kelas') }}")
             }
         })
     }
 
-    function activatePelajaran(id, is_checked, nama) {
-
-        let formData = new FormData
-        formData.append('_token', "{{ csrf_token() }}")
-        formData.append('id', id)
-        formData.append('is_active', is_checked)
-        formData.append('nama', nama)
-        prosesAjax(formData, "{{ route('activate-pelajaran') }}")
-    }
+    @if(session('response'))
+    let data = @json(session('response'));
+    sweetAlert(data)
+    @endif
 
 </script>
+
 @endsection

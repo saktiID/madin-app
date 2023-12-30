@@ -8,6 +8,7 @@ use App\Http\Controllers\PeriodeSetterController;
 use App\Http\Controllers\Admin\IdentitasController;
 use App\Http\Controllers\Admin\DataSantriController;
 use App\Http\Controllers\Admin\DataAsatidzController;
+use App\Http\Controllers\Admin\DataKelasController;
 use App\Http\Controllers\Admin\DataPelajaranController;
 
 /*
@@ -62,7 +63,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/data-pelajaran/activate', [DataPelajaranController::class, 'activate'])->name('activate-pelajaran');
         Route::post('/data-pelajaran/hapus', [DataPelajaranController::class, 'hapus'])->name('hapus-pelajaran');
 
-        Route::get('/data-kelas', [DataAsatidzController::class, 'index'])->name('data-kelas');
+        Route::get('/data-kelas', [DataKelasController::class, 'index'])->name('data-kelas');
+        Route::get('/data-kelas/{id}', [DataKelasController::class, 'detail'])->name('detail-kelas');
+        Route::post('/data-kelas/asatidz', [DataKelasController::class, 'asatidz'])->name('asatidz-kelas');
+        Route::post('/data-kelas/set-mustahiq', [DataKelasController::class, 'setMustahiq'])->name('set-mustahiq-kelas');
+        Route::post('/data-kelas/edit', [DataKelasController::class, 'edit'])->name('edit-kelas');
+        Route::post('/data-kelas/tambah', [DataKelasController::class, 'tambah'])->name('tambah-kelas');
+        Route::post('/data-kelas/hapus', [DataKelasController::class, 'hapus'])->name('hapus-kelas');
+
+
         Route::get('/data-periode', [DataAsatidzController::class, 'index'])->name('data-periode');
     });
 

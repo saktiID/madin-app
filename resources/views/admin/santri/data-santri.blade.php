@@ -50,7 +50,6 @@
     $(document).ready(function() {
         loadData()
         $("#tanggal_lahir").inputmask("99/99/9999");
-        const tambahTrigger = document.getElementById('tambahTrigger')
 
         $(document).on('click', '.hapus-data', function(e) {
             e.preventDefault()

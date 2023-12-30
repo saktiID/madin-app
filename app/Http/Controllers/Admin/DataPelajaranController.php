@@ -122,13 +122,19 @@ class DataPelajaranController extends Controller
     {
         $hapus = PelajaranHapus::hapus($request);
         if ($hapus) {
-            $msg = AlertResponse::response('success', 'Berhasil menghapus pelajaran! <br>' . $request->nama_pelajaran);
+            $msg = AlertResponse::response(
+                'success',
+                'Berhasil menghapus pelajaran! <br>' . $request->nama_pelajaran
+            );
             return response()->json([
                 'status' => true,
                 'data' => $msg
             ]);
         } else {
-            $msg = AlertResponse::response('error', 'Gagal menghapus pelajaran! <br>' . $request->nama_pelajaran);
+            $msg = AlertResponse::response(
+                'error',
+                'Gagal menghapus pelajaran! <br>' . $request->nama_pelajaran
+            );
             return response()->json([
                 'status' => true,
                 'data' => $msg

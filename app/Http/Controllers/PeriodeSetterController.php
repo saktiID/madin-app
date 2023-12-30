@@ -14,11 +14,12 @@ class PeriodeSetterController extends Controller
 
         session(['periode' => [
             'tahun_ajaran' => $periode->tahun_ajaran,
-            'semester' => $periode->semester
+            'semester' => $periode->semester,
+            'id' => $periode->id
         ]]);
 
 
         $msg = AlertResponseServiceProvider::response('success', 'Berhasil menyimpan periode!');
-        return redirect()->route('beranda')->with('response', $msg);
+        return redirect()->back()->with('response', $msg);
     }
 }

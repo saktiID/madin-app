@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             PeriodeSeeder::class,
             PelajaranSeeder::class,
-            SantriSeeder::class
+            SantriSeeder::class,
+            KelasSeeder::class,
         ]);
     }
 }

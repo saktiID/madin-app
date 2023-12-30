@@ -30,12 +30,14 @@ class GlobalDataServiceProvider extends ServiceProvider
         if (session()->has('periode')) {
             $data['currentPeriode'] = [
                 'tahun_ajaran' => session()->get('periode')['tahun_ajaran'],
-                'semester' => session()->get('periode')['semester']
+                'semester' => session()->get('periode')['semester'],
+                'id' => session()->get('periode')['id']
             ];
         } else {
             $data['currentPeriode'] = [
                 'tahun_ajaran' => '-',
-                'semester' => '-'
+                'semester' => '-',
+                'id' => '-'
             ];
         }
 

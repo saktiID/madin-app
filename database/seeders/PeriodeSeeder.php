@@ -14,7 +14,7 @@ class PeriodeSeeder extends Seeder
     public function run(): void
     {
         Periode::create([
-            'id' => Str::uuid(),
+            'id' => 'f27a80e2-9e52-453e-a1e1-f2deebbcf738',
             'tahun_ajaran' => '2023-2024',
             'semester' => 'Ganjil',
         ]);

@@ -37,6 +37,10 @@ class Santri extends Model
         'alamat',
         'kabupaten',
         'provinsi',
+        'tahun_masuk',
+        'tahun_keluar',
+        'tahun_lulus',
+        'is_active',
     ];
 
     /**
@@ -50,6 +54,27 @@ class Santri extends Model
                 'nama_santri as nama',
                 'avatar',
                 'nis',
+                'tahun_masuk',
+                'is_active',
+            )->latest('santris.created_at')->get();
+
+        return $santri;
+    }
+
+    /**
+     * method model ambil daftar data santri active
+     */
+    public static function getListDataSantriActive()
+    {
+        $santri = DB::table('santris')
+            ->where('is_active', '=', 1)
+            ->select(
+                'id',
+                'nama_santri as nama',
+                'avatar',
+                'nis',
+                'tahun_masuk',
+                'is_active',
             )->latest('santris.created_at')->get();
 
         return $santri;
@@ -57,19 +82,24 @@ class Santri extends Model
 
     public static function getProfileSantri($id)
     {
-        $santri = DB::table('santris')->where('id', '=', $id)->select(
-            'id',
-            'nama_santri as nama',
-            'avatar',
-            'nis',
-            'nik',
-            'gender',
-            'tempat_lahir',
-            'tanggal_lahir',
-            'alamat',
-            'kabupaten',
-            'provinsi',
-        )->first();
+        $santri = DB::table('santris')->where('id', '=', $id)
+            ->select(
+                'id',
+                'nama_santri as nama',
+                'avatar',
+                'nis',
+                'nik',
+                'gender',
+                'tempat_lahir',
+                'tanggal_lahir',
+                'alamat',
+                'kabupaten',
+                'provinsi',
+                'tahun_masuk',
+                'tahun_keluar',
+                'tahun_lulus',
+                'is_active',
+            )->first();
 
         return $santri;
     }

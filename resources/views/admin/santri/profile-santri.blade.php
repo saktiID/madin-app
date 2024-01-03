@@ -113,6 +113,39 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-12">
+                            <div class="mb-3">
+                                <label for="tahun_masuk">Tahun Masuk</label>
+                                <input type="text" value="{{ $santri->tahun_masuk }}" id="tahun_masuk" name="tahun_masuk" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-12">
+                            <div class="mb-3">
+                                <label for="tahun_keluar">Tahun Keluar</label>
+                                <input type="text" value="{{ $santri->tahun_keluar }}" id="tahun_keluar" name="tahun_keluar" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-12">
+                            <div class="mb-3">
+                                <label for="tahun_lulus">Tahun Lulus</label>
+                                <input type="text" value="{{ $santri->tahun_lulus }}" id="tahun_lulus" name="tahun_lulus" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-3">
+                                <label class="d-block"> Status Santri</label>
+                                <label class="switch s-primary mr-2">
+                                    <input type="checkbox" {{ ($santri->is_active) ? 'checked' : '' }} class="activate" data-id="{{ $santri->id }}" data-nama="{{ $santri->nama }}">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="mb-3 btn btn-primary simpan-biodata">Simpan</button>
                     </div>
@@ -133,6 +166,7 @@
 <link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert.css') }}">
 <link rel="stylesheet" href="{{ asset('cropperjs-main/dist/cropper.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/forms/switches.css') }}">
 @endsection
 
 @section('script')
@@ -147,6 +181,13 @@
         const spinner = document.createElement('div')
         spinner.classList = "spinner-border text-white align-self-center loader-sm"
         submitSimpanBiodataBtn.replaceChild(spinner, submitSimpanBiodataBtn.childNodes[0])
+    })
+
+    $(document).on('click', '.activate', function(e) {
+        let is_checked = $(this).prop('checked')
+        let id = $(this).attr('data-id')
+        let nama = $(this).attr('data-nama')
+        activateSantri(id, is_checked, nama)
     })
 
     $('form.form-biodata').on('submit', function(e) {
@@ -306,6 +347,16 @@
             $("#uploadImgModal").modal('hide')
             upload()
         })
+    }
+
+    function activateSantri(id, is_checked, nama) {
+
+        let formData = new FormData
+        formData.append('_token', "{{ csrf_token() }}")
+        formData.append('id', id)
+        formData.append('is_active', is_checked)
+        formData.append('nama', nama)
+        prosesAjax(formData, "{{ route('activate-santri') }}")
     }
 
 </script>

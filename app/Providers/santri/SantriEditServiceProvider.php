@@ -54,9 +54,30 @@ class SantriEditServiceProvider extends ServiceProvider
                 'alamat' => $request->alamat,
                 'kabupaten' => $request->kabupaten,
                 'provinsi' => $request->provinsi,
+                'tahun_masuk' => $request->tahun_masuk,
+                'tahun_keluar' => $request->tahun_keluar,
+                'tahun_lulus' => $request->tahun_lulus,
             ]);
 
         if ($updateSantri) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function activate($request)
+    {
+        $value = '';
+        if ($request->is_active == 'true') {
+            $value = 1;
+        } else {
+            $value = 0;
+        }
+        $activate = Santri::where('id', $request->id)
+            ->update(['is_active' => $value]);
+
+        if ($activate) {
             return true;
         } else {
             return false;

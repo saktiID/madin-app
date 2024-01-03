@@ -21,6 +21,8 @@
                     <th>Foto</th>
                     <th>Nama</th>
                     <th>NIS</th>
+                    <th>Tahun Masuk</th>
+                    <th>Status</th>
                     <th><i data-feather="more-horizontal"></i></th>
                 </tr>
             </thead>
@@ -39,6 +41,7 @@
 <link rel="stylesheet" href="{{ asset('plugins/table/datatable/datatables.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/forms/switches.css') }}">
 @endsection
 
 @section('script')
@@ -56,6 +59,13 @@
             let id = $(this).attr('data-id')
             let nama = $(this).attr('data-nama')
             deleteSantri(id, nama)
+        })
+
+        $(document).on('click', '.activate', function(e) {
+            let is_checked = $(this).prop('checked')
+            let id = $(this).attr('data-id')
+            let nama = $(this).attr('data-nama')
+            activateSantri(id, is_checked, nama)
         })
 
     })
@@ -84,6 +94,13 @@
                 }, //
                 {
                     data: 'nis'
+                }, //
+                {
+                    data: 'tahun_masuk', //
+                    className: 'text-center'
+                }, //
+                {
+                    data: 'status'
                 }, //
                 {
                     data: 'more'
@@ -188,6 +205,16 @@
                 prosesAjax(formData, "{{ route('hapus-santri') }}")
             }
         })
+    }
+
+    function activateSantri(id, is_checked, nama) {
+
+        let formData = new FormData
+        formData.append('_token', "{{ csrf_token() }}")
+        formData.append('id', id)
+        formData.append('is_active', is_checked)
+        formData.append('nama', nama)
+        prosesAjax(formData, "{{ route('activate-santri') }}")
     }
 
 </script>

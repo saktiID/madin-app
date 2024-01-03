@@ -91,8 +91,7 @@
                                 </div>
                             </div>
 
-
-
+                            <input type="text" name="tahun_masuk" value="{{ date("Y") }}" hidden>
                             <button type="submit" id="tambahBtn" hidden></button>
 
                         </div>

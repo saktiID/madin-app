@@ -10,7 +10,7 @@ class KelasMasukkanSantriServiceProvider extends ServiceProvider
 {
     public static function dataTable()
     {
-        $santri = Santri::getListDataSantri();
+        $santri = Santri::getListDataSantriActive();
         $dataTable = DataTables::of($santri)
             ->addIndexColumn()
             ->addColumn('foto', function ($santri) {

@@ -23,6 +23,10 @@ return new class extends Migration
             $table->string('alamat', 125);
             $table->string('kabupaten', 25);
             $table->string('provinsi', 25);
+            $table->string('tahun_masuk', 5)->nullable();
+            $table->string('tahun_keluar', 5)->nullable();
+            $table->string('tahun_lulus', 5)->nullable();
+            $table->boolean('is_active', true)->default(true);
             $table->timestamps();
         });
     }

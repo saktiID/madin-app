@@ -5,10 +5,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\FotoGetterController;
 use App\Http\Controllers\PeriodeSetterController;
+use App\Http\Controllers\Admin\DataKelasController;
 use App\Http\Controllers\Admin\IdentitasController;
 use App\Http\Controllers\Admin\DataSantriController;
 use App\Http\Controllers\Admin\DataAsatidzController;
-use App\Http\Controllers\Admin\DataKelasController;
+use App\Http\Controllers\Admin\DataPeriodeController;
 use App\Http\Controllers\Admin\DataPelajaranController;
 
 /*
@@ -53,6 +54,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/data-santri/{id}', [DataSantriController::class, 'detail'])->name('profile-santri');
         Route::post('/data-santri/tambah', [DataSantriController::class, 'tambah'])->name('tambah-santri');
         Route::post('/data-santri/edit', [DataSantriController::class, 'edit'])->name('edit-santri');
+        Route::post('/data-santri/activate', [DataSantriController::class, 'activate'])->name('activate-santri');
         Route::post('/data-santri/foto', [DataSantriController::class, 'foto'])->name('foto-santri');
         Route::post('/data-santri/hapus', [DataSantriController::class, 'hapus'])->name('hapus-santri');
 
@@ -75,7 +77,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/data-kelas/hapus', [DataKelasController::class, 'hapus'])->name('hapus-kelas');
 
 
-        Route::get('/data-periode', [DataAsatidzController::class, 'index'])->name('data-periode');
+        Route::get('/data-periode', [DataPeriodeController::class, 'index'])->name('data-periode');
     });
 
     Route::get('raport/kelas/{id}', [DataAsatidzController::class, 'index'])->name('raport-kelas');

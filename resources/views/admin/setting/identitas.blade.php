@@ -25,7 +25,7 @@
             </div>
 
             <div class="col-lg-8 col-sm-12">
-                <form method="POST" action="{{ route('simpan-setting-identitas') }}">
+                <form method="POST" action="{{ route('simpan-setting-identitas') }}" class="form-identitas">
                     @csrf
                     <div class="mb-3">
                         <label for="nama_madin">Nama Madin</label>
@@ -111,11 +111,6 @@
         submitSimpanSettingBtn.replaceChild(spinner, submitSimpanSettingBtn.childNodes[0])
     })
 
-    @if(session('response'))
-    let data = @json(session('response'));
-    sweetAlert(data)
-    @endif
-
     const avatar = document.getElementById('previewImg')
     const cropper = new Cropper(avatar, {
         aspectRatio: 1, // Sesuaikan dengan rasio aspek yang Anda inginkan
@@ -141,6 +136,12 @@
     $('#uploadImgModal').on('hidden.bs.modal', () => {
         cropper.destroy()
         inputImage.value = ''
+    })
+
+    $('form.form-identitas').on('submit', function(e) {
+        e.preventDefault()
+        let data = $(this).serializeArray()
+        serrialAssoc(data)
     })
 
     function upload() {
@@ -196,6 +197,70 @@
             $("#uploadImgModal").modal('hide')
             upload()
         })
+    }
+
+    function serrialAssoc(data) {
+        let formData = new FormData()
+        data.forEach(element => {
+            formData.append(element.name, element.value)
+        })
+        prosesAjax(formData, "{{ route('simpan-setting-identitas') }}")
+    }
+
+    function prosesAjax(data, route) {
+        $.ajax({
+            url: route, //
+            method: 'POST', //
+            data: data, //
+            dataType: 'json', //
+            processData: false, //
+            contentType: false, //
+            success: function(res) {
+                feedback(res)
+            }, //
+            error: function(err) {
+                console.log(err.responseText)
+                errorClientSide(err.responseText)
+            }
+        });
+    }
+
+    function feedback(res) {
+        if (!res.status) {
+            const divError = document.createElement('div')
+            for (let key in res.data) {
+                res.data[key].forEach((e) => {
+                    let span = document.createElement('span')
+                    span.innerHTML = e + '<br>'
+                    divError.appendChild(span)
+                })
+            }
+            let data = {
+                icon: 'error', //
+                title: 'Oops!', //
+                html: divError
+            }
+            sweetAlert(data)
+            onfinish()
+        } else {
+            sweetAlert(res.data)
+            onfinish()
+        }
+    }
+
+    function errorClientSide(err) {
+        let data = {
+            icon: 'error', //
+            title: 'Oops!', //
+            html: err
+        }
+        sweetAlert(data)
+    }
+
+    function onfinish() {
+        let span = document.createElement('span')
+        span.innerHTML = 'Simpan'
+        submitSimpanSettingBtn.replaceChild(span, submitSimpanSettingBtn.childNodes[0])
     }
 
 </script>

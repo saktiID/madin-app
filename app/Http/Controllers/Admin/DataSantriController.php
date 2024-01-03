@@ -147,6 +147,36 @@ class DataSantriController extends Controller
     }
 
     /**
+     * method controller activate santri
+     */
+    public function activate(Request $request)
+    {
+        // baris code activate santri
+        $activate = SantriEdit::activate($request);
+
+        $status = '';
+        if ($request->is_active == 'true') {
+            $status = 'mengaktifkan';
+        } else {
+            $status = 'menonaktifkan';
+        }
+
+        if ($activate) {
+            $msg = AlertResponse::response('success', 'Berhasil ' . $status . ' santri! <br>' . $request->nama);
+            return response()->json([
+                'status' => true,
+                'data' => $msg
+            ]);
+        } else {
+            $msg = AlertResponse::response('error', 'Gagal ' . $status . ' santri! <br>' . $request->nama);
+            return response()->json([
+                'status' => true,
+                'data' => $msg
+            ]);
+        }
+    }
+
+    /**
      * method controller detail santri
      */
     public function hapus(Request $request)

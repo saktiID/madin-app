@@ -21,13 +21,21 @@ class SantriDataTableServiceProvider extends ServiceProvider
                 return $santri->nama;
             })->addColumn('nis', function ($santri) {
                 return $santri->nis;
+            })->addColumn('tahun_masuk', function ($santri) {
+                return $santri->tahun_masuk;
+            })->addColumn('status', function ($santri) {
+                $data['is_active'] = $santri->is_active;
+                $data['id'] = $santri->id;
+                $data['nama'] = $santri->nama;
+                $element = view('elements.switch', $data);
+                return $element;
             })->addColumn('more', function ($santri) {
                 $data['route'] = 'profile-santri';
                 $data['id'] = $santri->id;
                 $data['nama'] = $santri->nama;
                 $element = view('elements.action-button-datatable', $data);
                 return $element;
-            })->rawColumns(['foto', 'more'])->make(true);
+            })->rawColumns(['foto', 'status', 'more'])->make(true);
 
         return $dataTable;
     }

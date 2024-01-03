@@ -38,7 +38,10 @@ class Periode extends Model
      */
     public static function getAllPeriode()
     {
-        $periode = DB::table('periodes')->orderBy('tahun_ajaran', 'ASC')->get();
+        $periode = DB::table('periodes')
+            ->orderBy('tahun_ajaran', 'ASC')
+            ->orderBy('semester', 'ASC')
+            ->get();
         return $periode;
     }
 }

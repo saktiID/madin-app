@@ -25,6 +25,8 @@ class SantriSeeder extends Seeder
             'alamat' => 'Ds. Wonosae No. 22, Krian Sidoarjo',
             'kabupaten' => 'Sidoarjo',
             'provinsi' => 'Jawa Timur',
+            'tahun_masuk' => '2023',
+            'is_active' => true,
         ]);
 
         Santri::create([
@@ -39,6 +41,8 @@ class SantriSeeder extends Seeder
             'alamat' => 'Ds. Semawur No. 32, Gedangan Sidoarjo',
             'kabupaten' => 'Sidoarjo',
             'provinsi' => 'Jawa Timur',
+            'tahun_masuk' => '2023',
+            'is_active' => true,
         ]);
 
         Santri::create([
@@ -53,6 +57,8 @@ class SantriSeeder extends Seeder
             'alamat' => 'Ds. Kolosebo No. 15, Wonoayu Sidoarjo',
             'kabupaten' => 'Sidoarjo',
             'provinsi' => 'Jawa Timur',
+            'tahun_masuk' => '2023',
+            'is_active' => true,
         ]);
     }
 }

@@ -32,6 +32,7 @@ class SantriTambahServiceProvider extends ServiceProvider
                 'alamat' => $request->alamat,
                 'kabupaten' => $request->kabupaten,
                 'provinsi' => $request->provinsi,
+                'tahun_masuk' => $request->tahun_masuk,
             ]);
             if ($tambah) {
                 return true;

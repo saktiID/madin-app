@@ -28,15 +28,26 @@ class IdentitasController extends Controller
 
     public function edit(Request $request)
     {
-
         $update = SettingService::updateSetting($request);
 
         if ($update) {
-            $msg = AlertResponse::response('success', 'Berhasil menyimpan identitas!');
-            return redirect()->route('identitas')->with('response', $msg);
+            $msg = AlertResponse::response(
+                'success',
+                'Berhasil menyimpan identitas!'
+            );
+            return response()->json([
+                'status' => true,
+                'data' => $msg
+            ]);
         } else {
-            $msg = AlertResponse::response('error', 'Gagal menyimpan identitas!');
-            return redirect()->route('identitas')->with('response', $msg);
+            $msg = AlertResponse::response(
+                'error',
+                'Gagal menyimpan identitas!'
+            );
+            return response()->json([
+                'status' => true,
+                'data' => $msg
+            ]);
         }
     }
 

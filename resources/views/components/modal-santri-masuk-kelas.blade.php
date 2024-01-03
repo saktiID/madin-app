@@ -22,6 +22,18 @@
                             </div>
 
 
+                            <x-datatable-responsive tableId="data-santri">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>No</th>
+                                        <th>Foto</th>
+                                        <th>Nama</th>
+                                        <th>NIS</th>
+                                        <th><i data-feather="more-horizontal"></i></th>
+                                    </tr>
+                                </thead>
+                            </x-datatable-responsive>
+
 
 
                             <button type="submit" id="tambahBtn" hidden></button>
@@ -31,20 +43,16 @@
                 </form>
 
             </div>
+            <div class="modal-footer d-block pt-0">
+                <div class="alert alert-outline-primary">
+                    <label>Santri berhasil dimasukkan:</label>
+                    <div class="wrapper-santri"></div>
+                </div>
+            </div>
             <div class="modal-footer">
-                <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Batalkan</button>
-                <button type="submit" class="btn btn-primary" id="tambahTrigger">Tambah</button>
+                <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i>Tutup</button>
+
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    const tambahBtn = document.getElementById('tambahBtn')
-    const tambahTrigger = document.getElementById('tambahTrigger')
-
-    tambahTrigger.addEventListener('click', () => {
-        tambahBtn.click()
-    })
-
-</script>

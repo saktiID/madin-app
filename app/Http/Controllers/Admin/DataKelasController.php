@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use App\Models\Kelas;
 use App\Models\Pengajar;
+use App\Models\KelasSantri;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\GlobalDataServiceProvider;
@@ -13,6 +14,7 @@ use App\Providers\AlertResponseServiceProvider as AlertResponse;
 use App\Providers\kelas\KelasHapusServiceProvider as KelasHapus;
 use App\Providers\kelas\KelasTambahServiceProvider as KelasTambah;
 use App\Providers\kelas\KelasDataTableServiceProvider as KelasDataTable;
+use App\Providers\kelas\KelasMasukkanSantriServiceProvider as KelasMasukkanSantri;
 
 class DataKelasController extends Controller
 {
@@ -45,7 +47,7 @@ class DataKelasController extends Controller
         }
 
         if ($request->ajax()) {
-            //
+            return KelasDataTable::detailKelasDataTable($request->periode_id, $request->id);
         }
 
         return view('admin.kelas.detail-kelas', $data);
@@ -89,6 +91,81 @@ class DataKelasController extends Controller
             ]);
         }
     }
+
+    /**
+     * method cotroller ambil data santri
+     */
+    public function santri(Request $request)
+    {
+        if ($request->ajax()) {
+            return KelasMasukkanSantri::dataTable();
+        }
+    }
+
+    /**
+     * method controller masukkan santri ke kelas
+     */
+    public function masukkanSantri(Request $request)
+    {
+        $santriKelas = KelasSantri::cekSantriKelas(
+            $request->santri_id,
+            $request->periode_id,
+        );
+        if ($santriKelas) {
+            return response()->json([
+                'status' => true,
+                'title' => 'Gagal',
+                'content' => 'sudah ada dalam kelas!'
+            ]);
+        } else {
+            $masuk = KelasEdit::masukkanSantri($request);
+            if ($masuk) {
+                return response()->json([
+                    'status' => true,
+                    'title' => 'Berhasil',
+                    'content' => 'telah dimasukkan kelas!'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'title' => 'Gagal',
+                    'content' => 'gagal dimasukkan kelas!'
+                ]);
+            }
+        }
+    }
+
+    /**
+     * method controller keluarkan santri dari kelas
+     */
+    public function keluarkanSantri(Request $request)
+    {
+        $santriKelas = KelasSantri::cekSantriKelasById($request->id);
+
+        if (!$santriKelas) {
+            return response()->json([
+                'status' => false,
+                'title' => 'Gagal',
+                'content' => 'tidak ada dalam kelas!'
+            ]);
+        } else {
+            $keluarkan = KelasEdit::keluarkanSantri($request);
+            if ($keluarkan) {
+                return response()->json([
+                    'status' => true,
+                    'title' => 'Berhasil',
+                    'content' => 'telah dikeluarkan dari kelas!'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'title' => 'Gagal',
+                    'content' => 'gagal dikeluarkan dari kelas!'
+                ]);
+            }
+        }
+    }
+
     /**
      * method controller edit kelas
      */

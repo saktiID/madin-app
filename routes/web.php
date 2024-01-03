@@ -64,6 +64,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/data-pelajaran/hapus', [DataPelajaranController::class, 'hapus'])->name('hapus-pelajaran');
 
         Route::get('/data-kelas', [DataKelasController::class, 'index'])->name('data-kelas');
+        Route::get('/data-kelas/santri', [DataKelasController::class, 'santri'])->name('santri-masuk-kelas');
+        Route::post('/data-kelas/santri/masukkan', [DataKelasController::class, 'masukkanSantri'])->name('masukkan-santri-kelas');
+        Route::post('/data-kelas/santri/keluarkan', [DataKelasController::class, 'keluarkanSantri'])->name('keluarkan-santri-kelas');
         Route::get('/data-kelas/{id}', [DataKelasController::class, 'detail'])->name('detail-kelas');
         Route::post('/data-kelas/asatidz', [DataKelasController::class, 'asatidz'])->name('asatidz-kelas');
         Route::post('/data-kelas/set-mustahiq', [DataKelasController::class, 'setMustahiq'])->name('set-mustahiq-kelas');

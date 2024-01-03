@@ -2,8 +2,10 @@
 
 namespace App\Providers\kelas;
 
-use App\Models\Kelas;
 use Exception;
+use App\Models\Kelas;
+use App\Models\KelasSantri;
+use Illuminate\Support\Str;
 use Illuminate\Support\ServiceProvider;
 
 class KelasEditServiceProvider extends ServiceProvider
@@ -35,6 +37,42 @@ class KelasEditServiceProvider extends ServiceProvider
                 ]);
 
             if ($update) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return $e;
+        }
+    }
+
+    public static function masukkanSantri($request)
+    {
+        try {
+            $masuk = KelasSantri::create([
+                'id' => Str::uuid(),
+                'periode_id' => $request->periode_id,
+                'kelas_id' => $request->kelas_id,
+                'santri_id' => $request->santri_id,
+            ]);
+
+            if ($masuk) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return $e;
+        }
+    }
+
+    public static function keluarkanSantri($request)
+    {
+        try {
+            $keluarkan = KelasSantri::where('id', $request->id)
+                ->delete();
+
+            if ($keluarkan) {
                 return true;
             } else {
                 return false;

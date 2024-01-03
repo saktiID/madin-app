@@ -74,7 +74,6 @@
             </div>
         </div>
 
-
     </x-card-box>
 
     <x-card-box cardTitle="Santri Kelas">
@@ -115,11 +114,13 @@
 <link rel="stylesheet" href="{{ asset('plugins/table/datatable/datatables.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert.css') }}">
+<link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
 @endsection
 
 @section('script')
 <script src="{{ asset('plugins/table/datatable/datatables.js') }}"></script>
 <script src="{{ asset('plugins/sweetalerts/sweetalert2.min.js') }}"></script>
+<script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 <x-sweet-alert />
 
 <script>
@@ -127,6 +128,7 @@
         loadData()
         populateSelectAsatidz()
     })
+    const wrapperSantri = document.querySelector('.wrapper-santri')
     const submitSimpanKelasBtn = document.querySelector('button[type="submit"].simpan-kelas')
     submitSimpanKelasBtn.addEventListener('click', () => {
         const spinner = document.createElement('div')
@@ -153,9 +155,183 @@
         serrialAssoc(data)
     })
 
+    $('#masukkanSantriModal').on('show.bs.modal', function() {
+        $('#data-santri').DataTable({
+            processing: true, //
+            pagination: true, //
+            serverSide: true, //
+            searching: true, //
+            ajax: {
+                url: "{{ route('santri-masuk-kelas') }}", //
+            }, //
+            columns: [{
+                    data: 'DT_RowIndex', //
+                    name: 'DT_RowIndex', //
+                    orderable: false, //
+                    searchbar: false, //
+                    className: 'text-center'
+                }, //
+                {
+                    data: 'foto'
+                }, //
+                {
+                    data: 'nama'
+                }, //
+                {
+                    data: 'nis'
+                }, //
+                {
+                    data: 'more'
+                }, //
+            ]
+        })
+    })
+
+    $('#masukkanSantriModal').on('hidden.bs.modal', function() {
+        $('#data-santri').DataTable().destroy();
+        wrapperSantri.innerHTML = ''
+    })
+
+    $(document).on('click', '.masukkan-santri', function(e) {
+        e.preventDefault()
+        let id = $(this).data('id');
+        let nama = $(this).data('nama');
+        masukkan(id, nama)
+
+    })
+
+    $(document).on('click', '.keluarkan-santri', function(e) {
+        e.preventDefault()
+        let id = $(this).data('id')
+        let nama = $(this).data('nama')
+        keluarkan(id, nama)
+    })
+
+    function masukkan(id, nama) {
+        let route = "{{ route('masukkan-santri-kelas', ['id' => 'id_js']) }}".replace('id_js', id)
+        let formData = new FormData()
+        formData.append('_token', "{{ csrf_token() }}")
+        formData.append('periode_id', "{{ $currentPeriode['id'] }}")
+        formData.append('kelas_id', "{{ $kelas->id }}")
+        formData.append('santri_id', id)
+        $.ajax({
+            url: route, //
+            method: 'POST', //
+            dataType: 'json', //
+            data: formData, //
+            processData: false, //
+            contentType: false, //
+            success: function(res) {
+                if (!res.status) {
+                    toastr.error(`${nama} ${res.content}`, `${res.title}`, {
+                        "progressBar": true
+                    })
+                } else {
+                    berhasilMemasukkan(nama, res.content, res.title)
+                }
+            }, //
+            error: function(err) {
+                console.log(err.responseText)
+                errorClientSide(err.responseText)
+            }
+        });
+    }
+
+    function keluarkan(id, nama) {
+        let route = "{{ route('keluarkan-santri-kelas') }}"
+        let formData = new FormData()
+        formData.append('_token', "{{ csrf_token() }}")
+        formData.append('id', id)
+
+        $.ajax({
+            url: route, //
+            method: 'POST', //
+            dataType: 'json', //
+            data: formData, //
+            processData: false, //
+            contentType: false, //
+            success: function(res) {
+                if (!res.status) {
+                    toastr.error(`${nama} ${res.content}`, `${res.title}`, {
+                        "progressBar": true
+                    })
+                } else {
+                    berhasilKeluarkan(nama, res.content, res.title)
+                }
+            }, //
+            error: function(err) {
+                console.log(err.responseText)
+                errorClientSide(err.responseText)
+            }
+        })
+    }
+
+    function berhasilMemasukkan(nama, content, title) {
+        if (title == 'Berhasil') {
+            let span = document.createElement('span');
+            span.classList.add('badge')
+            span.classList.add('badge-success')
+            span.classList.add('mr-1')
+            span.classList.add('mt-1')
+            span.textContent = nama
+            wrapperSantri.appendChild(span)
+
+            $('#santri-kelas').DataTable().ajax.reload()
+
+            toastr.success(`${nama} ${content}`, `${title}`, {
+                "progressBar": true
+            })
+        } else if (title == 'Gagal') {
+            toastr.error(`${nama} ${content}`, `${title}`, {
+                "progressBar": true
+            })
+        }
+    }
+
+    function berhasilKeluarkan(nama, content, title) {
+        if (title == 'Berhasil') {
+            toastr.success(`${nama} ${content}`, `${title}`, {
+                "progressBar": true
+            })
+            $('#santri-kelas').DataTable().ajax.reload()
+        } else if (title == 'Gagal') {
+            toastr.error(`${nama} ${content}`, `${title}`, {
+                "progressBar": true
+            })
+        }
+    }
+
     function loadData() {
         $('#santri-kelas').DataTable({
-
+            processing: true, //
+            pagination: true, //
+            serverSide: true, //
+            searching: true, //
+            ajax: {
+                url: "{{ route('detail-kelas', ['id' => $kelas->id, 'periode_id' => $currentPeriode['id']]) }}", //
+            }, //
+            columns: [{
+                    data: 'DT_RowIndex', //
+                    name: 'DT_RowIndex', //
+                    orderable: false, //
+                    searchbar: false, //
+                    className: 'text-center'
+                }, //
+                {
+                    data: 'foto', ///
+                    className: 'text-center'
+                }, //
+                {
+                    data: 'nama'
+                }, //
+                {
+                    data: 'nis', //
+                    className: 'text-center'
+                }, //
+                {
+                    data: 'more'
+                }, //
+            ]
         })
     }
 

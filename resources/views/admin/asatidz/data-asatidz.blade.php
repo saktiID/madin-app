@@ -82,7 +82,8 @@
                     className: 'text-center'
                 }, //
                 {
-                    data: 'foto'
+                    data: 'foto', //
+                    orderable: false, //
                 }, //
                 {
                     data: 'nama'
@@ -94,7 +95,8 @@
                     data: 'telp'
                 }, //
                 {
-                    data: 'more'
+                    data: 'more', //
+                    orderable: false, //
                 }, //
             ]
         })

@@ -10,9 +10,6 @@
     <x-sub-menu-item menuTitle="Data Periode" classActive="master-data/data-periode" route="data-periode" />
 </x-menu-item-dropdown>
 
-<x-menu-item-dropdown menuTitle="Raport" menuId="raport" menuIcon="archive" classActive="raport/*">
-    <x-sub-menu-item menuTitle="Kelas 1 Ibtida'" classActive="raport/kelas/uniq_id-1" route="raport-kelas" param="uniq_id-1" />
-    <x-sub-menu-item menuTitle="Kelas 2 Ibtida'" classActive="raport/kelas/uniq_id-2" route="raport-kelas" param="uniq_id-2" />
-</x-menu-item-dropdown>
+<x-menu-item menuTitle="Raport" menuIcon="archive" route="raport" classActive="raport" />
 
 <x-menu-item menuTitle="Log" menuIcon="pocket" route="log" classActive="log" />

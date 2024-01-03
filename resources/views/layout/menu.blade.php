@@ -11,9 +11,9 @@
 {{-- END ADMIN MENU --}}
 
 
-<x-menu-item-heading menuHeadingName="PENILAIAN" />
-
-
+{{-- BEGIN PENILAIAN MENU --}}
+@include('layout.penilaian-menu')
+{{-- END PENILAIAN MENU --}}
 
 
 {{-- modal --}}

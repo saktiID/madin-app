@@ -91,7 +91,8 @@
                     data: 'is_active'
                 }, //
                 {
-                    data: 'more'
+                    data: 'more', //
+                    orderable: false, //
                 }, //
             ]
         })

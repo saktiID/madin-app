@@ -43,4 +43,17 @@ class Pelajaran extends Model
 
         return $pelajaran;
     }
+
+    /**
+     * method model get list pelajaran active
+     */
+    public static function getListPelajaranActive()
+    {
+        $pelajaran = DB::table('pelajarans')
+            ->where('is_active', 1)
+            ->select(['*'])
+            ->latest()->get();
+
+        return $pelajaran;
+    }
 }

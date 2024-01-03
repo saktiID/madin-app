@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Periode;
 use App\Models\Setting;
+use App\Models\Pelajaran;
 use Illuminate\Support\ServiceProvider;
 
 class GlobalDataServiceProvider extends ServiceProvider
@@ -22,6 +23,7 @@ class GlobalDataServiceProvider extends ServiceProvider
         $data['logo_madin'] = $binding['logo_madin'];
         $data['nama_madin'] = $binding['nama_madin'];
         $data['alamat_madin'] = $binding['alamat_madin'];
+        $data['pelajaran'] = Pelajaran::getListPelajaranActive();
 
         if (!request()->is('/')) {
             $data['periode'] = Periode::getAllPeriode();

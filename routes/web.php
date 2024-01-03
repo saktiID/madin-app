@@ -1,12 +1,16 @@
 <?php
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\Admin\LogController;
 use App\Http\Controllers\FotoGetterController;
+use App\Http\Controllers\Admin\RaportController;
 use App\Http\Controllers\PeriodeSetterController;
 use App\Http\Controllers\Admin\DataKelasController;
 use App\Http\Controllers\Admin\IdentitasController;
+use App\Http\Controllers\Admin\PenilaianController;
 use App\Http\Controllers\Admin\DataSantriController;
 use App\Http\Controllers\Admin\DataAsatidzController;
 use App\Http\Controllers\Admin\DataPeriodeController;
@@ -80,9 +84,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/data-periode', [DataPeriodeController::class, 'index'])->name('data-periode');
     });
 
-    Route::get('raport/kelas/{id}', [DataAsatidzController::class, 'index'])->name('raport-kelas');
+    Route::get('raport', [RaportController::class, 'index'])->name('raport');
 
-    Route::get('log', [BerandaController::class, 'index'])->name('log');
+    Route::get('log', [LogController::class, 'index'])->name('log');
+
+    Route::get('penilaian/{pelajaran_id}', [PenilaianController::class, 'index'])->name('penilaian');
 
 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');

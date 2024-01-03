@@ -6,15 +6,19 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class modalTambahKelas extends Component
+class menuItemPenilaian extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public string $periodeId,
-        public string $semester,
-        public string $tahun
+        public string $menuTitle = '',
+        public string $menuIcon = '',
+        public string $route = '',
+        public string $classActive = '',
+        public string $dataToggle = '',
+        public string $dataTarget = '',
+        public string $pelajaranId = '',
     ) {
         //
     }
@@ -24,6 +28,6 @@ class modalTambahKelas extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.modal-tambah-kelas');
+        return view('components.menu-item-penilaian');
     }
 }

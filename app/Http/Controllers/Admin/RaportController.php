@@ -6,12 +6,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\GlobalDataServiceProvider;
 
-class DataPeriodeController extends Controller
+class RaportController extends Controller
 {
     public function index()
     {
         $data = GlobalDataServiceProvider::get();
-
-        return view('admin.periode.index', $data);
+        return view('admin.raport.index', $data);
     }
 }

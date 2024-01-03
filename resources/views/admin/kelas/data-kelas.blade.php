@@ -84,7 +84,8 @@
                     className: 'text-center'
                 }, //
                 {
-                    data: 'more'
+                    data: 'more', //
+                    orderable: false, //
                 }, //
             ]
         })

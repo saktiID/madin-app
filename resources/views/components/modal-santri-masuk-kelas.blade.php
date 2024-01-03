@@ -44,7 +44,7 @@
 
             </div>
             <div class="modal-footer d-block pt-0">
-                <div class="alert alert-outline-primary">
+                <div class="alert alert-outline-primary" style="height: 77px; overflow-x: hidden; overflow-y: auto;">
                     <label>Santri berhasil dimasukkan:</label>
                     <div class="wrapper-santri"></div>
                 </div>

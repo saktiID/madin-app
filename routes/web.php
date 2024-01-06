@@ -82,6 +82,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
         Route::get('/data-periode', [DataPeriodeController::class, 'index'])->name('data-periode');
+        Route::post('/data-periode/tambah', [DataPeriodeController::class, 'tambah'])->name('tambah-periode');
     });
 
     Route::get('raport', [RaportController::class, 'index'])->name('raport');

@@ -168,6 +168,7 @@
             html: err
         }
         sweetAlert(data)
+        onfinish()
     }
 
     function onload() {

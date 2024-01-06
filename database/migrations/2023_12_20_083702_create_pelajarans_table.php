@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('nama_pelajaran', 25);
             $table->string('deskripsi', 125);
-            $table->boolean('is_active');
+            $table->boolean('is_active', true)->default(true);
             $table->timestamps();
         });
     }

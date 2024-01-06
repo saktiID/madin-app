@@ -14,6 +14,8 @@ class SantriDataTableServiceProvider extends ServiceProvider
         $dataTable = DataTables::of($santri)
             ->addIndexColumn()
             ->addColumn('foto', function ($santri) {
+                $data['route'] = 'profile-santri';
+                $data['id'] = $santri->id;
                 $data['avatar'] = $santri->avatar;
                 $element = view('elements.avatar-datatable', $data);
                 return $element;

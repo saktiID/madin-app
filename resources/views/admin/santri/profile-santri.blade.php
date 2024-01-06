@@ -252,6 +252,7 @@
             html: err
         }
         sweetAlert(data)
+        onfinish()
     }
 
     function onfinish() {

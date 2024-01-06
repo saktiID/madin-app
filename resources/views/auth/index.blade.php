@@ -33,7 +33,7 @@
                                 </div>
                                 <i data-feather="lock"></i>
                                 <input id="password" name="password" type="password" class="form-control" placeholder="Kata sandi">
-                                <i data-feather="eye"></i>
+                                <i data-feather="eye" class="eye-toggle"></i>
                             </div>
                             <div class="d-sm-flex justify-content-between">
                                 <div class="field-wrapper">
@@ -70,6 +70,19 @@
         const spinner = document.createElement('div')
         spinner.classList = "spinner-border text-white align-self-center loader-sm"
         submitBtn.replaceChild(spinner, submitBtn.childNodes[0])
+    })
+
+    let visibility = true // true = open, false = close
+    const password = document.getElementById('password')
+    $('.eye-toggle').on('click', (e) => {
+        if (visibility) {
+            visibility = false;
+            password.setAttribute('type', 'text')
+        } else {
+            visibility = true;
+            password.setAttribute('type', 'password')
+
+        }
     })
 
     @error('email')

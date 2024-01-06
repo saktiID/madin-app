@@ -15,6 +15,8 @@ class AsatidzDataTableServiceProvider extends ServiceProvider
         $dataTable = DataTables::of($asatidz)
             ->addIndexColumn()
             ->addColumn('foto', function ($asatidz) {
+                $data['id'] = $asatidz->user_id;
+                $data['route'] = 'profile-asatidz';
                 $data['avatar'] = $asatidz->avatar;
                 $element = view('elements.avatar-datatable', $data);
                 return $element;

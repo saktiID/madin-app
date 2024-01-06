@@ -1,16 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\User\BerandaController;
+use App\Http\Controllers\User\PenilaianController;
+use App\Http\Controllers\User\FotoGetterController;
+use App\Http\Controllers\User\PeriodeSetterController;
 use App\Http\Controllers\Admin\LogController;
-use App\Http\Controllers\FotoGetterController;
 use App\Http\Controllers\Admin\RaportController;
-use App\Http\Controllers\PeriodeSetterController;
 use App\Http\Controllers\Admin\DataKelasController;
 use App\Http\Controllers\Admin\IdentitasController;
-use App\Http\Controllers\Admin\PenilaianController;
 use App\Http\Controllers\Admin\DataSantriController;
 use App\Http\Controllers\Admin\DataAsatidzController;
 use App\Http\Controllers\Admin\DataPeriodeController;

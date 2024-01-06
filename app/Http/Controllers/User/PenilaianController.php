@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,6 +11,6 @@ class PenilaianController extends Controller
     public function index()
     {
         $data = GlobalDataServiceProvider::get();
-        return view('admin.penilaian.index', $data);
+        return view('user.penilaian.index', $data);
     }
 }

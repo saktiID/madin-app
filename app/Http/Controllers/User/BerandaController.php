@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use App\Models\Santri;
 use App\Models\Pengajar;
 use App\Models\Pelajaran;
@@ -19,6 +20,6 @@ class BerandaController extends Controller
         $data['countSantri'] = Santri::count();
         $data['countPelajaran'] = Pelajaran::count();
 
-        return view('beranda', $data);
+        return view('user.beranda.index', $data);
     }
 }

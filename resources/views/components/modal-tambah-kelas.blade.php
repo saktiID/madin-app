@@ -21,26 +21,30 @@
                                 <span>Detail Kelas | Periode: Semester {{ $semester . ' '. $tahun }} </span>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="jenjang_kelas">Jenjang</label>
-                                <select name="jenjang_kelas" id="jenjang_kelas" class="form-control" required>
-                                    <option value="">-- Pilih Jenjang --</option>
-                                    @for($i = 1; $i < 13; $i++) <option value="{{ $i }}">Jenjang - {{ $i }}</option>
-                                        @endfor
-                                </select>
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-12">
+                                    <div class="mb-3">
+                                        <label for="jenjang_kelas">Jenjang</label>
+                                        <select name="jenjang_kelas" id="jenjang_kelas" class="form-control" required>
+                                            <option value="">-- Pilih Jenjang --</option>
+                                            @for($i = 1; $i < 13; $i++) <option value="{{ $i }}">Jenjang - {{ $i }}</option>
+                                                @endfor
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-12">
+                                    <div class="mb-3">
+                                        <label for="nama_kelas">Nama Kelas</label>
+                                        <input type="text" value="" id="nama_kelas" name="nama_kelas" class="form-control" placeholder="contoh: 1 Ibtida'iyyah" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-sm-12">
+                                    <div class="mb-3">
+                                        <label for="bagian_kelas">Bagian Kelas</label>
+                                        <input type="text" value="" id="bagian_kelas" name="bagian_kelas" class="form-control" placeholder="contoh: A" required>
+                                    </div>
+                                </div>
                             </div>
-
-
-                            <div class="mb-3">
-                                <label for="nama_kelas">Nama Kelas</label>
-                                <input type="text" value="" id="nama_kelas" name="nama_kelas" class="form-control" placeholder="contoh: 1 Ibtida'iyyah" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="bagian_kelas">Bagian Kelas</label>
-                                <input type="text" value="" id="bagian_kelas" name="bagian_kelas" class="form-control" placeholder="contoh: A" required>
-                            </div>
-
 
                             <button type="submit" id="tambahBtn" hidden></button>
 

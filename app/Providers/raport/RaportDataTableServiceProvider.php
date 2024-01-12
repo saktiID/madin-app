@@ -1,43 +1,13 @@
 <?php
 
-namespace App\Providers\kelas;
+namespace App\Providers\raport;
 
-use App\Models\Kelas;
 use App\Models\KelasSantri;
 use Illuminate\Support\ServiceProvider;
 use Yajra\DataTables\Facades\DataTables;
 
-class KelasDataTableServiceProvider extends ServiceProvider
+class RaportDataTableServiceProvider extends ServiceProvider
 {
-    public static function dataTable()
-    {
-        $periode_id = session()->get('periode')['id'];
-        $kelas = Kelas::getListKelas($periode_id);
-
-        $dataTable = DataTables::of($kelas)
-            ->addIndexColumn()
-            ->addColumn('jenjang_kelas', function ($kelas) {
-                return $kelas->jenjang_kelas;
-            })
-            ->addColumn('nama_kelas', function ($kelas) {
-                return $kelas->nama_kelas;
-            })
-            ->addColumn('bagian_kelas', function ($kelas) {
-                return $kelas->bagian_kelas;
-            })
-            ->addColumn('more', function ($kelas) {
-                $data['route'] = 'detail-kelas';
-                $data['id'] = $kelas->id;
-                $data['nama'] = $kelas->nama_kelas . ' ' . $kelas->bagian_kelas;
-                $element = view('elements.action-button-datatable', $data);
-                return $element;
-            })
-            ->rawColumns(['more'])
-            ->make(true);
-
-        return $dataTable;
-    }
-
     public static function detailKelasDataTable($periode_id, $kelas_id)
     {
         $santriKelas = KelasSantri::getListSantriKelas($periode_id, $kelas_id);
@@ -60,8 +30,9 @@ class KelasDataTableServiceProvider extends ServiceProvider
             })->addColumn('more', function ($santriKelas) {
                 $data['nama'] = $santriKelas->nama_santri;
                 $data['id'] = $santriKelas->id; // id dari kelas_santris table
-                $element = view('elements.keluarkan-santri', $data);
+                $element = view('elements.action-print-raport', $data);
                 return $element;
+                return 'testing';
             })->rawColumns(['foto', 'nama', 'more'])->make(true);
 
         return $dataTable;

@@ -19,7 +19,7 @@
                             @if (isset($mustahiq))
                             <img id="foto" src="{{ route('get-foto', ['filename' => $mustahiq->avatar]) }}" class="rounded" width="170px" height="170px">
                             @else
-                            <img id="foto" src="" class="rounded" width="170px" height="170px">
+                            <img id="foto" src="{{ route('get-foto', ['filename' => '-']) }}" class="rounded" width="170px" height="170px">
                             @endif
                         </div>
                     </div>
@@ -55,14 +55,19 @@
                         </select>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="nama_kelas">Nama Kelas</label>
-                        <input type="text" value="{{ $kelas->nama_kelas }}" id="nama_kelas" name="nama_kelas" class="form-control" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="bagian_kelas">Bagian Kelas</label>
-                        <input type="text" value="{{ $kelas->bagian_kelas }}" id="bagian_kelas" name="bagian_kelas" class="form-control" required>
+                    <div class="row">
+                        <div class="col-lg-6 col-sm12">
+                            <div class="mb-3">
+                                <label for="nama_kelas">Nama Kelas</label>
+                                <input type="text" value="{{ $kelas->nama_kelas }}" id="nama_kelas" name="nama_kelas" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm12">
+                            <div class="mb-3">
+                                <label for="bagian_kelas">Bagian Kelas</label>
+                                <input type="text" value="{{ $kelas->bagian_kelas }}" id="bagian_kelas" name="bagian_kelas" class="form-control" required>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="d-flex justify-content-end">
@@ -309,6 +314,9 @@
             searching: true, //
             ajax: {
                 url: "{{ route('detail-kelas', ['id' => $kelas->id, 'periode_id' => $currentPeriode['id']]) }}", //
+            }, //
+            oLanguage: {
+                sProcessing: "<div class='spinner-border text-primary align-self-center loader-sm'></div>"
             }, //
             columns: [{
                     data: 'DT_RowIndex', //

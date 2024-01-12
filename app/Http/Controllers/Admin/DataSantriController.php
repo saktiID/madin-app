@@ -42,6 +42,17 @@ class DataSantriController extends Controller
     }
 
     /**
+     * method controller detail santri
+     */
+    public function detailEmis(Request $request)
+    {
+        $data = GlobalDataServiceProvider::get();
+        $data['santri'] = Santri::getProfileEmisSantri($request->id);
+
+        return view('admin.santri.profile-santri-emis', $data);
+    }
+
+    /**
      * method controller tambah santri
      */
     public function tambah(Request $request)
@@ -57,6 +68,9 @@ class DataSantriController extends Controller
         } else {
             // baris code menambah santri
             $tambah = SantriTambah::tambah($request);
+
+            // baris code menambah santri emis
+            // $tambah = SantriTambah::tambahEmis($request);
 
             if ($tambah) {
                 $msg = AlertResponse::response('success', 'Berhasil menambah Santri! <br>' . $request->nama);

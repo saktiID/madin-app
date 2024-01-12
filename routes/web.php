@@ -37,6 +37,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('set-periode', [PeriodeSetterController::class, 'setCurrentPeriode'])->name('set-periode');
     Route::get('beranda', [BerandaController::class, 'index'])->name('beranda');
 
+    // begin route for admin
     Route::get('identitas', [IdentitasController::class, 'index'])->name('identitas');
     Route::post('identitas/edit', [IdentitasController::class, 'edit'])->name('simpan-setting-identitas');
     Route::post('identitas/logo', [IdentitasController::class, 'logo'])->name('simpan-logo');
@@ -55,6 +56,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/data-santri', [DataSantriController::class, 'index'])->name('data-santri');
         Route::get('/data-santri/{id}', [DataSantriController::class, 'detail'])->name('profile-santri');
+        Route::get('/data-santri-emis/{id}', [DataSantriController::class, 'detailEmis'])->name('profile-santri-emis');
         Route::post('/data-santri/tambah', [DataSantriController::class, 'tambah'])->name('tambah-santri');
         Route::post('/data-santri/edit', [DataSantriController::class, 'edit'])->name('edit-santri');
         Route::post('/data-santri/activate', [DataSantriController::class, 'activate'])->name('activate-santri');
@@ -87,8 +89,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('raport', [RaportController::class, 'index'])->name('raport');
 
     Route::get('log', [LogController::class, 'index'])->name('log');
+    // end route for admin
 
     Route::get('penilaian/{pelajaran_id}', [PenilaianController::class, 'index'])->name('penilaian');
+    Route::post('penilaian', [PenilaianController::class, 'simpan'])->name('simpan-penilaian');
 
 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');

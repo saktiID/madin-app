@@ -15,6 +15,8 @@ class KelasMasukkanSantriServiceProvider extends ServiceProvider
             ->addIndexColumn()
             ->addColumn('foto', function ($santri) {
                 $data['avatar'] = $santri->avatar;
+                $data['route'] = 'profile-santri';
+                $data['id'] = $santri->id;
                 $element = view('elements.avatar-datatable', $data);
                 return $element;
             })->addColumn('nama', function ($santri) {

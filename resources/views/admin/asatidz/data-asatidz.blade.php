@@ -74,6 +74,9 @@
             ajax: {
                 url: "{{ route('data-asatidz') }}", //
             }, //
+            oLanguage: {
+                sProcessing: "<div class='spinner-border text-primary align-self-center loader-sm'></div>"
+            }, //
             columns: [{
                     data: 'DT_RowIndex', //
                     name: 'DT_RowIndex', //

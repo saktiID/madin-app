@@ -42,12 +42,14 @@
 <link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/sweetalerts/sweetalert.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/forms/switches.css') }}">
+<link rel="stylesheet" href="{{ asset('plugins/jquery-step/jquery.steps.css') }}">
 @endsection
 
 @section('script')
 <script src="{{ asset('plugins/table/datatable/datatables.js') }}"></script>
 <script src="{{ asset('plugins/input-mask/jquery.inputmask.bundle.min.js') }}"></script>
 <script src="{{ asset('plugins/sweetalerts/sweetalert2.min.js') }}"></script>
+<script src="{{ asset('plugins/jquery-step/jquery.steps.min.js') }}"></script>
 <x-sweet-alert />
 <script>
     $(document).ready(function() {
@@ -78,6 +80,9 @@
             searching: true, //
             ajax: {
                 url: "{{ route('data-santri') }}", //
+            }, //
+            oLanguage: {
+                sProcessing: "<div class='spinner-border text-primary align-self-center loader-sm'></div>"
             }, //
             columns: [{
                     data: 'DT_RowIndex', //
@@ -117,6 +122,14 @@
         serrialAssoc(data)
         onload()
     })
+
+    $("#circle-basic").steps({
+        headerTag: "h3"
+        , bodyTag: "section"
+        , transitionEffect: "slideLeft"
+        , autoFocus: true
+        , cssClass: 'circle wizard'
+    });
 
     function serrialAssoc(data) {
         let formData = new FormData()

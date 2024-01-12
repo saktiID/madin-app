@@ -90,6 +90,9 @@
             ajax: {
                 url: "{{ route('data-periode') }}", //
             }, //
+            oLanguage: {
+                sProcessing: "<div class='spinner-border text-primary align-self-center loader-sm'></div>"
+            }, //
             columns: [{
                     data: 'id', //
                     className: 'text-center', //

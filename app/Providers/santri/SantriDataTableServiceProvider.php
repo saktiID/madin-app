@@ -33,9 +33,10 @@ class SantriDataTableServiceProvider extends ServiceProvider
                 return $element;
             })->addColumn('more', function ($santri) {
                 $data['route'] = 'profile-santri';
+                $data['route_emis'] = 'profile-santri-emis';
                 $data['id'] = $santri->id;
                 $data['nama'] = $santri->nama;
-                $element = view('elements.action-button-datatable', $data);
+                $element = view('elements.action-button-emis-datatable', $data);
                 return $element;
             })->rawColumns(['foto', 'status', 'more'])->make(true);
 

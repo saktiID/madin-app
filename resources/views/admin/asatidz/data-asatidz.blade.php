@@ -8,7 +8,7 @@
         <div class="row mb-3">
             <div class="col mx-3">
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-info btn-sm"><i data-feather="share-2" class="mr-2"></i> Export</button>
+                    {{-- <button type="button" class="btn btn-info btn-sm"><i data-feather="share-2" class="mr-2"></i> Export</button> --}}
                     <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambahAsatidzModal"><i data-feather="user-plus" class="mr-2"></i> Tambah</button>
                 </div>
             </div>

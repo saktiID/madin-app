@@ -13,6 +13,18 @@ MadinApp merupakan aplikasi management untuk madrasah diniyyah (Madin) dengan fi
 -   Penilaian
 -   Raport
 
+## Coming soon
+
+-   Export / Import Data Asatidz dengan Excel
+-   Export / Import Data Santri dengan Excel
+-   Export / Import Penilaian dengan Excel
+
+## Requirements
+
+-   PHP 8.1 or newer
+-   MariaDB 10.4.32
+-   Laravel 10.x
+
 ## Installation
 
 Clone repository
@@ -31,6 +43,12 @@ Generate key
 
 ```
 php artisan key:generate
+```
+
+Link storage
+
+```
+php artisan storage:link
 ```
 
 Migrate database

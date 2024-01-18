@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\GlobalDataServiceProvider;
 use App\Providers\raport\RaportDataTableServiceProvider as RaportDataTable;
-use ZanySoft\LaravelPDF\PDF;
 
 class RaportController extends Controller
 {

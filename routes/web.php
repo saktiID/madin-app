@@ -2,17 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Admin\LogController;
+use App\Http\Controllers\User\ProfilController;
+use App\Http\Controllers\Admin\RaportController;
 use App\Http\Controllers\User\BerandaController;
 use App\Http\Controllers\User\PenilaianController;
-use App\Http\Controllers\User\FotoGetterController;
-use App\Http\Controllers\User\PeriodeSetterController;
-use App\Http\Controllers\Admin\LogController;
-use App\Http\Controllers\Admin\RaportController;
 use App\Http\Controllers\Admin\DataKelasController;
 use App\Http\Controllers\Admin\IdentitasController;
+use App\Http\Controllers\User\FotoGetterController;
 use App\Http\Controllers\Admin\DataSantriController;
 use App\Http\Controllers\Admin\DataAsatidzController;
 use App\Http\Controllers\Admin\DataPeriodeController;
+use App\Http\Controllers\User\PeriodeSetterController;
 use App\Http\Controllers\Admin\DataPelajaranController;
 
 /*
@@ -95,6 +96,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('penilaian/{pelajaran_id}', [PenilaianController::class, 'index'])->name('penilaian');
     Route::post('penilaian', [PenilaianController::class, 'simpan'])->name('simpan-penilaian');
 
-
+    Route::get('profil', [ProfilController::class, 'index'])->name('profil');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 });

@@ -12,4 +12,4 @@
 
 <x-menu-item menuTitle="Raport" menuIcon="archive" route="raport" classActive="raport" />
 
-<x-menu-item menuTitle="Log" menuIcon="pocket" route="log" classActive="log" />
+{{-- <x-menu-item menuTitle="Log" menuIcon="pocket" route="log" classActive="log" /> --}}

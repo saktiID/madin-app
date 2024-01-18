@@ -13,6 +13,38 @@ MadinApp merupakan aplikasi management untuk madrasah diniyyah (Madin) dengan fi
 -   Penilaian
 -   Raport
 
+## Installation
+
+Clone repository
+
+```
+git clone https://github.com/saktiID/madin-app.git
+```
+
+Install Package
+
+```
+composer Install
+```
+
+Generate key
+
+```
+php artisan key:generate
+```
+
+Migrate database
+
+```
+php artisan migrate --seed
+```
+
+Serve
+
+```
+php artisan serve
+```
+
 ## License
 
 MadinApp adalah perangkat lunak sumber terbuka yang dilisensikan di bawah [lisensi MIT] (https://opensource.org/licenses/MIT).

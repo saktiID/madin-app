@@ -5,6 +5,7 @@ namespace App\Providers\asatidz;
 use App\Models\Pengajar;
 use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Log;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\ServiceProvider;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -39,7 +40,7 @@ class AsatidzEditServiceProvider extends ServiceProvider
                 return false;
             }
         } catch (Exception $e) {
-            return $e;
+            Log::error($e);
         }
     }
 

@@ -4,6 +4,7 @@ namespace App\Providers\pelajaran;
 
 use Exception;
 use App\Models\Pelajaran;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
 class PelajaranHapusServiceProvider extends ServiceProvider
@@ -20,7 +21,7 @@ class PelajaranHapusServiceProvider extends ServiceProvider
                 return true;
             }
         } catch (Exception $e) {
-            return $e;
+            Log::error($e);
         }
     }
 }

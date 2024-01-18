@@ -6,6 +6,7 @@ use Exception;
 use App\Models\Kelas;
 use App\Models\KelasSantri;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
 class KelasEditServiceProvider extends ServiceProvider
@@ -22,7 +23,7 @@ class KelasEditServiceProvider extends ServiceProvider
                 return false;
             }
         } catch (Exception $e) {
-            return $e;
+            Log::error($e);
         }
     }
 
@@ -42,7 +43,7 @@ class KelasEditServiceProvider extends ServiceProvider
                 return false;
             }
         } catch (Exception $e) {
-            return $e;
+            Log::error($e);
         }
     }
 
@@ -62,7 +63,7 @@ class KelasEditServiceProvider extends ServiceProvider
                 return false;
             }
         } catch (Exception $e) {
-            return $e;
+            Log::error($e);
         }
     }
 
@@ -78,7 +79,7 @@ class KelasEditServiceProvider extends ServiceProvider
                 return false;
             }
         } catch (Exception $e) {
-            return $e;
+            Log::error($e);
         }
     }
 }

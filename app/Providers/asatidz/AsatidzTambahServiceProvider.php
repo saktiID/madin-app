@@ -6,6 +6,7 @@ use Exception;
 use App\Models\User;
 use App\Models\Pengajar;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\ServiceProvider;
 
@@ -52,7 +53,7 @@ class AsatidzTambahServiceProvider extends ServiceProvider
 
             return true;
         } catch (Exception $e) {
-            return $e;
+            Log::error($e);
         }
     }
 }

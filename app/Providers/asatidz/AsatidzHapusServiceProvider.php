@@ -5,6 +5,7 @@ namespace App\Providers\asatidz;
 use Exception;
 use App\Models\User;
 use App\Models\Pengajar;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
 class AsatidzHapusServiceProvider extends ServiceProvider
@@ -26,7 +27,7 @@ class AsatidzHapusServiceProvider extends ServiceProvider
                 return true;
             }
         } catch (Exception $e) {
-            return $e;
+            Log::error($e);
         }
     }
 }

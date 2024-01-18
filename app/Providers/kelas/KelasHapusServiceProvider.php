@@ -4,6 +4,7 @@ namespace App\Providers\kelas;
 
 use Exception;
 use App\Models\Kelas;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
 class KelasHapusServiceProvider extends ServiceProvider
@@ -20,7 +21,7 @@ class KelasHapusServiceProvider extends ServiceProvider
                 return true;
             }
         } catch (Exception $e) {
-            return $e;
+            Log::error($e);
         }
     }
 }

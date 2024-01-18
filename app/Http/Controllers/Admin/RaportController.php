@@ -9,10 +9,10 @@ use App\Models\KelasSantri;
 use App\Models\NilaiSantri;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
 use App\Providers\GlobalDataServiceProvider;
 use App\Providers\raport\RaportDataTableServiceProvider as RaportDataTable;
+use ZanySoft\LaravelPDF\PDF;
 
 class RaportController extends Controller
 {

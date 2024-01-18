@@ -4,6 +4,7 @@ namespace App\Providers\santri;
 
 use Exception;
 use App\Models\Santri;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
 class SantriHapusServiceProvider extends ServiceProvider
@@ -20,7 +21,7 @@ class SantriHapusServiceProvider extends ServiceProvider
                 return true;
             }
         } catch (Exception $e) {
-            return $e;
+            Log::error($e);
         }
     }
 }

@@ -22,7 +22,7 @@ class PeriodeTambahServiceProvider extends ServiceProvider
                 return false;
             }
         } catch (\Exception $e) {
-            return Log::error($e);
+            Log::error($e);
         }
     }
 }

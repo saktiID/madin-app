@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use App\Models\Setting;
 use Exception;
+use App\Models\Setting;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
 class SettingServiceProvider extends ServiceProvider
@@ -44,7 +45,7 @@ class SettingServiceProvider extends ServiceProvider
                 return false;
             }
         } catch (Exception $e) {
-            return $e;
+            Log::error($e);
         }
     }
 }

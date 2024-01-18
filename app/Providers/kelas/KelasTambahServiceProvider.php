@@ -5,6 +5,7 @@ namespace App\Providers\kelas;
 use Exception;
 use App\Models\Kelas;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
 class KelasTambahServiceProvider extends ServiceProvider
@@ -27,7 +28,7 @@ class KelasTambahServiceProvider extends ServiceProvider
                 return false;
             }
         } catch (Exception $e) {
-            return $e;
+            Log::error($e);
         }
     }
 }

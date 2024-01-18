@@ -1,5 +1,5 @@
 <div class="modal fade" id="tambahKelasModal" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="tambahKelasModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="tambahKelasModalLabel">Tambah Kelas</h5>
@@ -25,7 +25,7 @@
                                 <div class="col-lg-4 col-sm-12">
                                     <div class="mb-3">
                                         <label for="jenjang_kelas">Jenjang</label>
-                                        <select name="jenjang_kelas" id="jenjang_kelas" class="form-control" required>
+                                        <select name="jenjang_kelas" id="jenjang_kelas" class="form-control selectpicker" required>
                                             <option value="">-- Pilih Jenjang --</option>
                                             @for($i = 1; $i < 13; $i++) <option value="{{ $i }}">Jenjang - {{ $i }}</option>
                                                 @endfor

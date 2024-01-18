@@ -51,6 +51,12 @@ Link storage
 php artisan storage:link
 ```
 
+Copy .env file
+
+```
+cp .env.example .env
+```
+
 Migrate database
 
 ```

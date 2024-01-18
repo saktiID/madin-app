@@ -87,6 +87,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::get('raport', [RaportController::class, 'index'])->name('raport');
+    Route::post('raport/print/{id}', [RaportController::class, 'print'])->name('print-raport');
 
     Route::get('log', [LogController::class, 'index'])->name('log');
     // end route for admin

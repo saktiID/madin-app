@@ -22,7 +22,7 @@
         <strong>Perhatian!</strong> <span>Wajib memilih periode terlebih dahulu.</span>
     </div>
     <div class="input-group mb-2 mr-sm-2">
-        <select name="periode" id="periode" class="form-control" required>
+        <select name="periode" id="periode" class="form-control selectpicker" required>
             <option value="">-- Periode --</option>
             @foreach ($periode as $p )
             <option value="{{ $p->id }}">{{ $p->semester }} {{ $p->tahun_ajaran }}</option>

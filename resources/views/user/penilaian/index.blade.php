@@ -10,7 +10,7 @@
                 <div class="mb-4 mx-3">
                     <form action="#" class="lihat-nilai">
                         <div class="input-group">
-                            <select name="kelas_id" id="kelas_id" class="form-control" required>
+                            <select name="kelas_id" id="kelas_id" class="form-control selectpicker" required>
                                 <option value="" disabled selected>-- Pilih kelas --</option>
                                 @foreach ($kelas as $item)
                                 <option value="{{ $item->id }}">{{ $item->nama_kelas . ' ' . $item->bagian_kelas }}</option>

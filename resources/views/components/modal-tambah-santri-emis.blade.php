@@ -122,7 +122,7 @@
                                         <div class="col-lg-6 col-sm-12">
                                             <div class="mb-3">
                                                 <label for="pembiaya">Yang membiayai</label>
-                                                <select id="pembiaya" name="pembiaya" class="form-control">
+                                                <select id="pembiaya" name="pembiaya" class="form-control selectpicker">
                                                     <option value=""></option>
                                                     <option value="Orang tua">Orang tua</option>
                                                     <option value="Wali/Orang tua asuh">Wali/Orang tua asuh</option>
@@ -134,7 +134,7 @@
                                         <div class="col-lg-6 col-sm-12">
                                             <div class="mb-3">
                                                 <label for="kebutuhan_khusus">Kebutuhan Khusus</label>
-                                                <select name="kebutuhan_khusus" id="kebutuhan_khusus" class="form-control">
+                                                <select name="kebutuhan_khusus" id="kebutuhan_khusus" class="form-control selectpicker">
                                                     <option value=""></option>
                                                     <option value="Tidak ada">Tidak ada</option>
                                                     <option value="Lamban belajar">Lamban belajar</option>
@@ -152,7 +152,7 @@
                                         <div class="col-lg-6 col-sm-12">
                                             <div class="mb-3">
                                                 <label for="kebutuhan_disabilitas">Kebutuhan Disabilitas</label>
-                                                <select name="kebutuhan_disabilitas" id="kebutuhan_disabilitas" class="form-control">
+                                                <select name="kebutuhan_disabilitas" id="kebutuhan_disabilitas" class="form-control selectpicker">
                                                     <option value=""></option>
                                                     <option value="Tidak ada">Tidak ada</option>
                                                     <option value="Tuna netra">Tuna netra</option>
@@ -167,7 +167,7 @@
                                         <div class="col-lg-6 col-sm-12">
                                             <div class="mb-3">
                                                 <label for="gender">Gender Santri</label>
-                                                <select value="" id="gender" name="gender" class="form-control" required>
+                                                <select value="" id="gender" name="gender" class="form-control selectpicker" required>
                                                     <option value="">-- Pilih Gender --</option>
                                                     <option value="male">Laki-laki</option>
                                                     <option value="female">Perempuan</option>
@@ -192,7 +192,7 @@
                                         <div class="col-lg-6 col-sm-12">
                                             <div class="mb-3">
                                                 <label for="status_ayah">Status Ayah</label>
-                                                <select name="status_ayah" id="status_ayah" name="status_ayah" class="form-control">
+                                                <select name="status_ayah" id="status_ayah" name="status_ayah" class="form-control selectpicker">
                                                     <option value=""></option>
                                                     <option value="Masih hidup">Masih hidup</option>
                                                     <option value="Sudah meninggal">Sudah meninggal</option>
@@ -206,7 +206,7 @@
                                         <div class="col-lg-6 col-sm-12">
                                             <div class="mb-3">
                                                 <label for="kewarganegaraan_ayah">Kewarganegaraan Ayah</label>
-                                                <select name="kewarganegaraan_ayah" id="kewarganegaraan_ayah" class="form-control">
+                                                <select name="kewarganegaraan_ayah" id="kewarganegaraan_ayah" class="form-control selectpicker">
                                                     <option value=""></option>
                                                     <option value="WNI">WNI</option>
                                                     <option value="WNA">WNA</option>
@@ -259,7 +259,7 @@
                                         <div class="col-lg-6 col-sm-12">
                                             <div class="mb-3">
                                                 <label for="penghasilan_ayah">Penghasilan Ayah</label>
-                                                <select name="penghasilan_ayah" id="penghasilan_ayah" class="form-control">
+                                                <select name="penghasilan_ayah" id="penghasilan_ayah" class="form-control selectpicker">
                                                     <option value=""></option>
                                                     <option value="Kurang dari 500.000">Kurang dari 500.000</option>
                                                     <option value="500.000 - 1.000.000">500.000 - 1.000.000</option>
@@ -291,7 +291,7 @@
                                         <div class="col-lg-6 col-sm-12">
                                             <div class="mb-3">
                                                 <label for="status_ibu">Status Ibu</label>
-                                                <select name="status_ibu" id="status_ibu" name="status_ibu" class="form-control">
+                                                <select name="status_ibu" id="status_ibu" name="status_ibu" class="form-control selectpicker">
                                                     <option value=""></option>
                                                     <option value="Masih hidup">Masih hidup</option>
                                                     <option value="Sudah meninggal">Sudah meninggal</option>
@@ -305,7 +305,7 @@
                                         <div class="col-lg-6 col-sm-12">
                                             <div class="mb-3">
                                                 <label for="kewarganegaraan_ibu">Kewarganegaraan Ibu</label>
-                                                <select name="kewarganegaraan_ibu" id="kewarganegaraan_ibu" class="form-control">
+                                                <select name="kewarganegaraan_ibu" id="kewarganegaraan_ibu" class="form-control selectpicker">
                                                     <option value=""></option>
                                                     <option value="WNI">WNI</option>
                                                     <option value="WNA">WNA</option>
@@ -358,7 +358,7 @@
                                         <div class="col-lg-6 col-sm-12">
                                             <div class="mb-3">
                                                 <label for="penghasilan_ibu">Penghasilan Ibu</label>
-                                                <select name="penghasilan_ibu" id="penghasilan_ibu" class="form-control">
+                                                <select name="penghasilan_ibu" id="penghasilan_ibu" class="form-control selectpicker">
                                                     <option value=""></option>
                                                     <option value="Kurang dari 500.000">Kurang dari 500.000</option>
                                                     <option value="500.000 - 1.000.000">500.000 - 1.000.000</option>

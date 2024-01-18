@@ -21,18 +21,14 @@ class RaportDataTableServiceProvider extends ServiceProvider
                 $element = view('elements.avatar-datatable', $data);
                 return $element;
             })->addColumn('nama', function ($santriKelas) {
-                $data['nama'] = $santriKelas->nama_santri;
-                $data['santri_id'] = $santriKelas->santri_id;
-                $element = view('elements.link-nama', $data);
-                return $element;
+                return $santriKelas->nama_santri;
             })->addColumn('nis', function ($santriKelas) {
                 return $santriKelas->nis;
             })->addColumn('more', function ($santriKelas) {
                 $data['nama'] = $santriKelas->nama_santri;
-                $data['id'] = $santriKelas->id; // id dari kelas_santris table
+                $data['id'] = $santriKelas->santri_id;
                 $element = view('elements.action-print-raport', $data);
                 return $element;
-                return 'testing';
             })->rawColumns(['foto', 'nama', 'more'])->make(true);
 
         return $dataTable;

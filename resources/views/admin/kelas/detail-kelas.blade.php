@@ -48,7 +48,7 @@
 
                     <div class="mb-3">
                         <label for="jenjang_kelas">Jenjang</label>
-                        <select name="jenjang_kelas" id="jenjang_kelas" class="form-control" required>
+                        <select name="jenjang_kelas" id="jenjang_kelas" class="form-control selectpicker" required>
                             <option value="">-- Pilih Jenjang --</option>
                             @for($i = 1; $i < 13; $i++) <option value="{{ $i }}" {{ ($kelas->jenjang_kelas == $i) ? 'selected' : '' }}>Jenjang - {{ $i }}</option>
                                 @endfor

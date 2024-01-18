@@ -15,6 +15,7 @@ class GlobalDataServiceProvider extends ServiceProvider
             ->where('nama_setting', 'logo_madin')
             ->orWhere('nama_setting', 'nama_madin')
             ->orWhere('nama_setting', 'alamat_madin')
+            ->orWhere('nama_setting', 'kota_madin')
             ->pluck('nilai_setting', 'nama_setting');
 
         // $data['logo_madin'] = Setting::getSettingMadin('logo_madin');
@@ -23,6 +24,7 @@ class GlobalDataServiceProvider extends ServiceProvider
         $data['logo_madin'] = $binding['logo_madin'];
         $data['nama_madin'] = $binding['nama_madin'];
         $data['alamat_madin'] = $binding['alamat_madin'];
+        $data['kota_madin'] = $binding['kota_madin'];
         $data['pelajaran'] = Pelajaran::getListPelajaranActive();
 
         if (!request()->is('/')) {

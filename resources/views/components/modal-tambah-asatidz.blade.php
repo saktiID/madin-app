@@ -33,7 +33,7 @@
                                 <div class="col-6">
                                     <div class="mb-3">
                                         <label for="gender_asatidz">Gender Asatidz</label>
-                                        <select id="gender_asatidz" name="gender" class="form-control" required>
+                                        <select id="gender_asatidz" name="gender" class="form-control selectpicker" required>
                                             <option value="">-- Pilih Gender --</option>
                                             <option value="male">Laki-laki</option>
                                             <option value="female">Perempuan</option>
@@ -43,7 +43,7 @@
                                 <div class="col-6">
                                     <div class="mb-3">
                                         <label for="role_asatidz">Role Asatidz</label>
-                                        <select id="role_asatidz" name="role" class="form-control" required>
+                                        <select id="role_asatidz" name="role" class="form-control selectpicker" required>
                                             <option value="">-- Pilih Role --</option>
                                             <option value="Administrator">Administrator</option>
                                             <option value="Asatidz">Asatidz</option>

@@ -57,7 +57,7 @@
                         <div class="col-6">
                             <div class="mb-3">
                                 <label for="gender_asatidz">Gender Asatidz</label>
-                                <select id="gender_asatidz" name="gender" class="form-control">
+                                <select id="gender_asatidz" name="gender" class="form-control selectpicker">
                                     <option value="">-- Pilih Gender --</option>
                                     <option value="male" {{ ($data_asatidz->gender == 'male' ? 'selected' : '') }}>Laki-laki</option>
                                     <option value="female" {{ ($data_asatidz->gender == 'female' ? 'selected' : '') }}>Perempuan</option>
@@ -67,7 +67,7 @@
                         <div class="col-6">
                             <div class="mb-3">
                                 <label for="role_asatidz">Role Asatidz</label>
-                                <select id="role_asatidz" name="role" class="form-control">
+                                <select id="role_asatidz" name="role" class="form-control selectpicker">
                                     <option value="">-- Pilih Role --</option>
                                     <option value="Administrator" {{ ($data_asatidz->role == 'Administrator' ? 'selected' : '') }}>Administrator</option>
                                     <option value="Asatidz" {{ ($data_asatidz->role == 'Asatidz' ? 'selected' : '') }}>Asatidz</option>

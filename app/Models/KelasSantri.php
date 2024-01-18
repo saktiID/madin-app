@@ -43,11 +43,39 @@ class KelasSantri extends Model
     }
 
     /**
-     * method mode cek santri dalam kelas by id
+     * method mode cek santri dalam kelas by kelas_santris id
      */
     public static function cekSantriKelasById($id)
     {
         return KelasSantri::where('id', $id)->exists();
+    }
+
+    /**
+     * method model untuk ambil data santri ada di kelas mana by id
+     */
+    public static function getSantriDiKelasManaById($periode_id, $santri_id)
+    {
+        return DB::table('kelas_santris')
+            ->where('kelas_santris.santri_id', '=', $santri_id)
+            ->where('kelas_santris.periode_id', '=', $periode_id)
+            ->join('santris', 'kelas_santris.santri_id', '=', 'santris.id')
+            ->join('kelas', 'kelas_santris.kelas_id', '=', 'kelas.id')
+            ->join('periodes', 'kelas_santris.periode_id', '=', 'periodes.id')
+            ->join('users', 'kelas.mustahiq_id', '=', 'users.id')
+            ->select('*')
+            ->select([
+                'users.nama as nama_mustahiq',
+                'santris.nama_santri as nama_santri',
+                'santris.id as santri_id',
+                'santris.nis',
+                'kelas.nama_kelas',
+                'kelas.bagian_kelas',
+                'kelas.jenjang_kelas',
+                'kelas_santris.kelas_id',
+                'periodes.semester',
+                'periodes.tahun_ajaran',
+            ])
+            ->first();
     }
 
     /**

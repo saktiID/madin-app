@@ -30,7 +30,7 @@
                                 <div class="col-lg-6 col-sm-12">
                                     <div class="mb-3">
                                         <label for="gender">Gender Santri</label>
-                                        <select value="" id="gender" name="gender" class="form-control" required>
+                                        <select value="" id="gender" name="gender" class="form-control selectpicker" required>
                                             <option value="">-- Pilih Gender --</option>
                                             <option value="male">Laki-laki</option>
                                             <option value="female">Perempuan</option>

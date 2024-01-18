@@ -23,7 +23,7 @@
                                 <div class="col-lg-6 col-sm-12">
                                     <div class="mb-3">
                                         <label for="semester">Semester</label>
-                                        <select name="semester" id="semester" class="form-control" required>
+                                        <select name="semester" id="semester" class="form-control selectpicker" required>
                                             <option value="">-- Semester --</option>
                                             <option value="Ganjil">Ganjil</option>
                                             <option value="Genap">Genap</option>

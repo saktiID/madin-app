@@ -86,10 +86,8 @@
         <div class="row mb-3">
             <div class="col mx-3">
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-info btn-sm">
-                        <i data-feather="share-2" class="mr-2"></i> Export</button>
-                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#masukkanSantriModal">
-                        <i data-feather="corner-down-right" class="mr-2"></i> Masukkan santri ke kelas</button>
+                    {{-- <button type="button" class="btn btn-info btn-sm"><i data-feather="share-2" class="mr-2"></i> Export</button> --}}
+                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#masukkanSantriModal"><i data-feather="corner-down-right" class="mr-2"></i> Masukkan santri ke kelas</button>
                 </div>
             </div>
         </div>

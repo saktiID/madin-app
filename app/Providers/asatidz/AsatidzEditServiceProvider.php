@@ -28,7 +28,7 @@ class AsatidzEditServiceProvider extends ServiceProvider
 
             $foto = User::where('id', $request->id)->update(['avatar' => $imageName]);
 
-            if ($oldImage != 'user-male-90x90.png' || $oldImage != 'user-female-90x90.png') {
+            if ($oldImage != 'user-male-90x90.png' && $oldImage != 'user-female-90x90.png') {
                 if (file_exists(storage_path('app/profile/' . $oldImage))) {
                     unlink(storage_path('app/profile/' . $oldImage));
                 }

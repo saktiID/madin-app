@@ -23,7 +23,7 @@ MadinApp merupakan aplikasi management untuk madrasah diniyyah (Madin) dengan fi
 
 -   PHP 8.1 or newer
 -   MariaDB 10.4.32
--   Laravel 10.x
+-   Extension gd (php.ini)
 
 ## Installation
 
@@ -39,6 +39,12 @@ Install Package
 composer Install
 ```
 
+Copy .env file
+
+```
+cp .env.example .env
+```
+
 Generate key
 
 ```
@@ -49,12 +55,6 @@ Link storage
 
 ```
 php artisan storage:link
-```
-
-Copy .env file
-
-```
-cp .env.example .env
 ```
 
 Migrate database

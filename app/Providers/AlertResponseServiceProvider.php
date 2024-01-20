@@ -16,7 +16,7 @@ class AlertResponseServiceProvider extends ServiceProvider
         $title = '';
 
         if ($status == 'success') {
-            $title = 'Hore!';
+            $title = 'Alhamdulillah!';
         }
         if ($status == 'error') {
             $title = 'Oops!';

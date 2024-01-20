@@ -58,7 +58,7 @@ class DataPelajaranController extends Controller
     {
         $data = GlobalDataServiceProvider::get();
 
-        $data['pelajaran'] = Pelajaran::select(['id', 'nama_pelajaran as nama', 'deskripsi', 'is_active'])
+        $data['pelajaran_target'] = Pelajaran::select(['id', 'nama_pelajaran as nama', 'deskripsi', 'is_active'])
             ->where('id', $request->id)->first();
 
         return view('admin.pelajaran.detail-pelajaran', $data);

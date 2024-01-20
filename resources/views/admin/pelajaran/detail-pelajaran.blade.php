@@ -17,7 +17,7 @@
             <div class="col-lg-8 col-sm-12">
                 <form action="{{ route('edit-pelajaran') }}" method="POST" class="form-pelajaran">
                     @csrf
-                    <input type="text" name="id" value="{{ $pelajaran->id }}" hidden>
+                    <input type="text" name="id" value="{{ $pelajaran_target->id }}" hidden>
 
                     <div class="alert alert-light-warning">
                         <span>Detail dan Deskripsi</span>
@@ -25,18 +25,18 @@
 
                     <div class="mb-3">
                         <label for="nama">Nama Pelajaran</label>
-                        <input type="text" value="{{ $pelajaran->nama }}" id="nama" name="nama" class="form-control" required>
+                        <input type="text" value="{{ $pelajaran_target->nama }}" id="nama" name="nama" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="deskripsi">Deskripsi Pelajaran</label>
-                        <input type="text" value="{{ $pelajaran->deskripsi }}" id="deskripsi" name="deskripsi" class="form-control" required>
+                        <input type="text" value="{{ $pelajaran_target->deskripsi }}" id="deskripsi" name="deskripsi" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="d-block"> Status Pelajaran</label>
                         <label class="switch s-primary mr-2">
-                            <input type="checkbox" {{ ($pelajaran->is_active) ? 'checked' : '' }} class="activate" data-id="{{ $pelajaran->id }}" data-nama="{{ $pelajaran->nama }}">
+                            <input type="checkbox" {{ ($pelajaran_target->is_active) ? 'checked' : '' }} class="activate" data-id="{{ $pelajaran_target->id }}" data-nama="{{ $pelajaran_target->nama }}">
                             <span class="slider round"></span>
                         </label>
                     </div>

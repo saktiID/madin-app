@@ -101,7 +101,7 @@
             e.preventDefault()
             let data = {
                 type: 'success', //
-                title: 'Hore!', //
+                title: 'Alhamdulillah!', //
                 html: 'Tanggal raport berhasil diatur menjadi </br>' + $('#tanggal_raport').val(), //
                 footer: '<small>Ketika sudah mencetak raport, tanggal tidak bisa diubah.</small>', //
             }

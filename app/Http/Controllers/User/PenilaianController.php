@@ -130,8 +130,8 @@ class PenilaianController extends Controller
                     'santri_id' => $activeWorksheet[$i][1]
                 ],
                 [
-                    'musyafahat' => $activeWorksheet[$i][3],
-                    'kitabah' => $activeWorksheet[$i][4],
+                    'musyafahat' => $activeWorksheet[$i][3] ? $activeWorksheet[$i][3] : '',
+                    'kitabah' => $activeWorksheet[$i][4] ? $activeWorksheet[$i][4] : '',
                 ]
             );
         }

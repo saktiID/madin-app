@@ -23,7 +23,7 @@ MadinApp merupakan aplikasi management untuk madrasah diniyyah (Madin) dengan fi
 
 -   PHP 8.1 or newer
 -   MariaDB 10.4.32
--   Extension gd (php.ini)
+-   PHP extension php_gd enabled (php.ini)
 
 ## Installation
 

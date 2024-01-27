@@ -93,6 +93,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('log', [LogController::class, 'index'])->name('log');
     // end route for admin
 
+    Route::get('penilaian/download', [PenilaianController::class, 'download'])->name('penilaian-download');
+    Route::post('penilaian/upload', [PenilaianController::class, 'upload'])->name('penilaian-upload');
     Route::get('penilaian/{pelajaran_id}', [PenilaianController::class, 'index'])->name('penilaian');
     Route::post('penilaian', [PenilaianController::class, 'simpan'])->name('simpan-penilaian');
 

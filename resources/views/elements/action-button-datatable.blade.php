@@ -1,4 +1,7 @@
 <div class="text-center">
+    @if (Auth::user()->id == $id)
+    <a class="btn btn-warning btn-sm py-1 px-3" href="{{ route($route, $id) }}">Akun Anda</a>
+    @else
     <div class="btn-group" role="group">
         <a href="{{ route($route, $id) }}" type="button" class="btn btn-success btn-sm py-1 px-3" title="Detail">
             <svg xmlns="http://www.w3.org/2000/svg" style="width: 15px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link">
@@ -14,4 +17,5 @@
             </svg>
         </a>
     </div>
+    @endif
 </div>

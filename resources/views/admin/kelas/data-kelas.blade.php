@@ -179,7 +179,7 @@
         swal({
             type: 'warning', //
             title: 'Hapus Kelas', //
-            html: `Menghapus kelas ${nama}?`, //
+            html: `Menghapus kelas ${nama}? <br> <small>*Santri di kelas, nilai, dan raport juga akan terhapus.<br>*Data santri tetap ada.</small>`, //
             showCancelButton: true, //
             confirmButtonText: 'Hapus', //
         }).then((result) => {

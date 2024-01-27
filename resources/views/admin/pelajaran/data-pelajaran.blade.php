@@ -186,7 +186,7 @@
         swal({
             type: 'warning', //
             title: 'Hapus Pelajaran', //
-            html: `Menghapus pelajaran ${nama}?`, //
+            html: `Menghapus pelajaran ${nama}? <br> <small>*Semua nilai santri juga akan terhapus.</small>`, //
             showCancelButton: true, //
             confirmButtonText: 'Hapus', //
         }).then((result) => {

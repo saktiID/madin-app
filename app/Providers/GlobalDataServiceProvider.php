@@ -26,6 +26,7 @@ class GlobalDataServiceProvider extends ServiceProvider
         $data['alamat_madin'] = $binding['alamat_madin'];
         $data['kota_madin'] = $binding['kota_madin'];
         $data['pelajaran'] = Pelajaran::getListPelajaranActive();
+        $data['version'] = "1.1.0.2024";
 
         if (!request()->is('/')) {
             $data['periode'] = Periode::getAllPeriode();

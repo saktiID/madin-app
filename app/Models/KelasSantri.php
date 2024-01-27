@@ -87,7 +87,8 @@ class KelasSantri extends Model
             ->join('santris', 'kelas_santris.santri_id', '=', 'santris.id')
             ->where([
                 ['kelas_santris.periode_id', '=', $periode_id],
-                ['kelas_santris.kelas_id', '=', $kelas_id]
+                ['kelas_santris.kelas_id', '=', $kelas_id],
+                ['santris.is_active', '=', 1]
             ])
             ->select([
                 'kelas_santris.id as id',

@@ -20,6 +20,14 @@
                     </form>
                 </div>
             </div>
+            <div class="col-lg-6 col-sm-12">
+                <div class="mb-4 mx-3  d-flex justify-content-end">
+                    <div class="btn-group" role="group">
+                        <div class="btn btn-info" id="download"><i data-feather="download"></i> Download</div>
+                        <div class="btn btn-success" id="upload"><i data-feather="upload"></i> Upload</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row">
@@ -47,6 +55,32 @@
         </div>
 
     </x-card-box>
+
+    <form action="{{ route('penilaian-download') }}" method="GET" id="form-download-template" hidden>
+        <input type="text" name="periode_id" value="{{ $currentPeriode['id'] }}">
+        <input type="text" name="pelajaran_id" value="{{ $pelajaran_target->id }}">
+        <input type="text" name="kelas_id" id="kelas_id_to_download">
+    </form>
+
+    <form action="{{ route('penilaian-upload') }}" method="POST" id="form-upload" enctype="multipart/form-data" hidden>
+        <input type="file" name="excelFile" id="excelFile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+    </form>
+
+    {{-- modal upload --}}
+    <x-modal-upload-nilai>
+
+        <div class="text-center mb-2">
+            <p>Mengupload nilai</p>
+            <strong id="fileTitle"></strong>
+        </div>
+        <div class="progress br-30 progress-md mb-1">
+            <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <div class="text-center">
+            <span class="mb-4"><img src="{{ asset('assets/img/sesttings.gif') }}" alt="proses" width="20px"> Sedang memporses...</span>
+        </div>
+
+    </x-modal-upload-nilai>
 
 </div>
 @endsection
@@ -91,7 +125,6 @@
             }
             penilaian.destroy();
             loadData()
-            $('.simpan-nilai').attr('hidden', false)
         })
 
         $('form.insert-or-update-nilai').on('submit', function(e) {
@@ -140,6 +173,96 @@
             spinner.classList = "spinner-border text-white align-self-center loader-sm"
             btn_simpan.replaceChild(spinner, btn_simpan.childNodes[0])
         })
+
+        $('#download').on('click', function() {
+            if (!document.getElementById('kelas_id').value) {
+                Swal.fire({
+                    type: 'error', //
+                    title: 'Oops...', //
+                    text: 'Pilih kelas terlebih dahulu', //
+                })
+            } else if (penilaian.rows().count() == 0) {
+
+                Swal.fire({
+                    type: 'error', //
+                    title: 'Oops...', //
+                    text: 'Tidak ada siswa dalam kelas', //
+                })
+            } else {
+                $('#kelas_id_to_download').val(document.getElementById('kelas_id').value)
+                $('form#form-download-template').submit()
+            }
+        })
+
+        $('#upload').on('click', function() {
+            if (!document.getElementById('kelas_id').value) {
+                Swal.fire({
+                    type: 'error', //
+                    title: 'Oops...', //
+                    text: 'Pilih kelas terlebih dahulu', //
+                })
+            } else if (penilaian.rows().count() == 0) {
+
+                Swal.fire({
+                    type: 'error', //
+                    title: 'Oops...', //
+                    text: 'Tidak ada siswa dalam kelas', //
+                })
+            } else {
+                $('input#excelFile').click()
+            }
+        })
+
+        $('form#form-upload').on('change', function(e) {
+            $('#uploadNilaiModal').modal('show');
+            let fileTitle = $('input#excelFile').val()
+            document.getElementById('fileTitle').innerHTML = fileTitle
+
+            const excelFile = $('input#excelFile').prop('files')[0]
+            let formData = new FormData();
+            formData.append('_token', "{{ csrf_token() }}")
+            formData.append('excelFile', excelFile)
+            formData.append('pelajaran_id_target', "{{ $pelajaran_target->id }}")
+
+            $.ajax({
+                url: "{{ route('penilaian-upload') }}", //
+                type: 'POST', //
+                data: formData, //
+                contentType: false, //
+                processData: false, //
+                xhr: function() {
+                    var xhr = new window.XMLHttpRequest()
+                    xhr.upload.addEventListener("progress", function(evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total
+                            percentComplete = parseInt(percentComplete * 100)
+                            $('.progress-bar').css('width', percentComplete + '%')
+                        }
+                    }, false);
+                    return xhr;
+                }, //
+                success: function(res) {
+                    resetUploadModal(res);
+                    penilaian.destroy();
+                    loadData()
+                }, //
+                error: function(res) {
+                    resetUploadModal(res);
+                }
+            })
+        })
+
+        function resetUploadModal(res) {
+            setTimeout(() => {
+                $('#uploadNilaiModal').modal('hide');
+                document.querySelector("form#form-upload").reset()
+                document.getElementById('fileTitle').innerHTML = ''
+                $('.progress-bar').css('width', '0' + '%')
+                if (res.status) {
+                    sweetAlert(res.data)
+                }
+            }, 1500);
+        }
 
         function prosesAjax(data, route) {
             $.ajax({
@@ -233,7 +356,14 @@
                         data: 'kitabah', //
                         className: 'text-center'
                     }, //
-                ]
+                ], //
+                fnDrawCallback: function() {
+                    if (penilaian.rows().count() === 0) {
+                        $('.simpan-nilai').attr('hidden', true)
+                    } else {
+                        $('.simpan-nilai').attr('hidden', false)
+                    }
+                }
             })
         }
 

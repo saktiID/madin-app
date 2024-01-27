@@ -223,6 +223,8 @@
             formData.append('_token', "{{ csrf_token() }}")
             formData.append('excelFile', excelFile)
             formData.append('pelajaran_id_target', "{{ $pelajaran_target->id }}")
+            formData.append('periode_id_target', "{{ $currentPeriode['id'] }}")
+            formData.append('kelas_id_target', document.getElementById('kelas_id').value)
 
             $.ajax({
                 url: "{{ route('penilaian-upload') }}", //

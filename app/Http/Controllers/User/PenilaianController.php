@@ -89,20 +89,37 @@ class PenilaianController extends Controller
         $spreadsheet = $reader->load($filetmp);
         $activeWorksheet = $spreadsheet->getActiveSheet()->toArray();
 
+        $periode_id_target = $request->periode_id_target;
         $pelajaran_id_target = $request->pelajaran_id_target;
-        $pelajaran_id_excel = $activeWorksheet[2][1];
+        $kelas_id_target = $request->kelas_id_target;
 
-        if ($pelajaran_id_target != $pelajaran_id_excel) {
-            $msg = AlertResponse::response('error', 'Mata pelajaran tidak sesuai');
+        $periode_id = $activeWorksheet[1][1];
+        $pelajaran_id = $activeWorksheet[2][1];
+        $kelas_id = $activeWorksheet[3][1];
+
+        if ($periode_id_target != $periode_id) {
+            $msg = AlertResponse::response('error', 'Periode tidak sesuai!');
             return response()->json([
                 'status' => true,
                 'data' => $msg
             ]);
         }
 
-        $periode_id = $activeWorksheet[1][1];
-        $pelajaran_id = $activeWorksheet[2][1];
-        $kelas_id = $activeWorksheet[3][1];
+        if ($kelas_id_target != $kelas_id) {
+            $msg = AlertResponse::response('error', 'Kelas tidak sesuai!');
+            return response()->json([
+                'status' => true,
+                'data' => $msg
+            ]);
+        }
+
+        if ($pelajaran_id_target != $pelajaran_id) {
+            $msg = AlertResponse::response('error', 'Mata pelajaran tidak sesuai');
+            return response()->json([
+                'status' => true,
+                'data' => $msg
+            ]);
+        }
 
         for ($i = 6; $i < count($activeWorksheet); $i++) {
             $record_nilai = NilaiSantri::updateOrCreate(

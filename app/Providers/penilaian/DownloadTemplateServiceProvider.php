@@ -5,6 +5,7 @@ namespace App\Providers\penilaian;
 use App\Models\Kelas;
 use App\Models\Pelajaran;
 use App\Models\KelasSantri;
+use App\Models\Periode;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -19,7 +20,13 @@ class DownloadTemplateServiceProvider extends ServiceProvider
             $santri = KelasSantri::getListSantriKelas($request->periode_id, $request->kelas_id);
             $pelajaran = Pelajaran::where('id', $request->pelajaran_id)->first();
             $kelas = Kelas::where('id', $request->kelas_id)->first();
-            $judul = "TEMPLATE NILAI " . strtoupper($pelajaran->nama_pelajaran);
+            $periode = Periode::where('id', $request->periode_id)->first();
+            $judul = "TEMPLATE NILAI"
+                . ' ' . strtoupper($pelajaran->nama_pelajaran
+                    . ' ' . $kelas->nama_kelas
+                    . ' ' . $kelas->bagian_kelas
+                    . ' ' . $periode->semester
+                    . ' ' . $periode->tahun_ajaran);
 
             $spreadsheet = new Spreadsheet();
             $activeWorksheet = $spreadsheet->getActiveSheet();
@@ -154,7 +161,9 @@ class DownloadTemplateServiceProvider extends ServiceProvider
             $filename = 'Template Nilai'
                 . ' ' . $pelajaran->nama_pelajaran
                 . ' ' . $kelas->nama_kelas
-                . ' ' . $kelas->bagian_kelas;
+                . ' ' . $kelas->bagian_kelas
+                . ' ' . $periode->semester
+                . ' ' . $periode->tahun_ajaran;
             header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             header("Content-Disposition: attachment; filename=" . $filename . ".xls");
             header('Cache-Control: max-age=0');

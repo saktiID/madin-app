@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Inertia\Inertia;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,6 +22,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // paksa https
+        if (request()->header('x-forwarded-proto') === 'https') {
+            URL::forceScheme('https');
+        }
+
         Vite::prefetch(concurrency: 3);
         Inertia::share([
             'translations' => [

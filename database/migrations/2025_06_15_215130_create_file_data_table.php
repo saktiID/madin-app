@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('filesize');
             $table->enum('data_for', ['asatidz', 'santri']);
             $table->boolean('is_imported')->nullable();
-            $table->string('log')->nullable();
+            $table->text('log')->nullable();
             $table->timestamps();
         });
     }

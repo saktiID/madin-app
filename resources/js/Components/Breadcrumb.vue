@@ -10,9 +10,9 @@ defineProps({
 </script>
 
 <template>
-    <nav aria-label="breadcrumb" class="w-max">
+    <nav aria-label="breadcrumb" class="w-full max-w-full">
         <ol
-            class="flex w-full flex-wrap items-center rounded-md bg-slate-800 p-1"
+            class="flex flex-wrap items-center rounded-md bg-slate-800 p-1 break-words"
         >
             <li
                 class="flex cursor-pointer items-center text-sm text-white transition-colors duration-300"

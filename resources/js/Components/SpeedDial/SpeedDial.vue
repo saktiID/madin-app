@@ -1,6 +1,7 @@
 <script setup>
 import { PlusIcon } from "@heroicons/vue/solid";
 import { ref, onMounted, onUnmounted } from "vue";
+import { handleScroll, scrolling } from "@/Composables";
 
 const showDial = ref(false);
 
@@ -24,7 +25,15 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div data-dial-init class="fixed end-6 bottom-6 group">
+    <div
+        class="fixed z-20 end-4 bottom-20 transition-transform duration-500 group"
+        :class="[
+            {
+                'translate-y-12': scrolling.down,
+                'translate-y-0': scrolling.up,
+            },
+        ]"
+    >
         <div
             v-show="showDial"
             id="speed-dial-menu-default"

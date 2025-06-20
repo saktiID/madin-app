@@ -1,4 +1,5 @@
 <script setup>
+import { sidebarState } from "@/Composables";
 import PerfectScrollbar from "@/Components/PerfectScrollbar.vue";
 import ProfileCard from "@/Components/ProfileCard.vue";
 import SidebarLink from "@/Components/Sidebar/SidebarLink.vue";
@@ -44,7 +45,10 @@ router.on("navigate", () => {
             class="flex flex-col flex-1 gap-4"
         >
             <!-- divider -->
-            <div class="relative flex items-center">
+            <div
+                v-show="sidebarState.isOpen || sidebarState.isHovered"
+                class="relative flex items-center"
+            >
                 <div class="flex-grow border-t border-gray-300"></div>
                 <span class="px-2 text-gray-400 text-sm">Administrator</span>
                 <div class="flex-grow border-t border-gray-300"></div>

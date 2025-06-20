@@ -179,7 +179,7 @@ const reload = () => {
                     url: route('admin.master-data.data-asatidz.index'),
                 },
                 {
-                    name: 'Upload',
+                    name: 'Upload Data',
                     url: '#',
                 },
             ]"

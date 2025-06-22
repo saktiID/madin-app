@@ -1,4 +1,8 @@
-!avatar/*
-!img/*
-!logo/*
+avatar/*
+img/*
+logo/*
+!avatar/avatar.png
+!img/404.png
+!img/no-result.png
+!logo/logo_madin_default.png
 !.gitignore

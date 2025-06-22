@@ -32,6 +32,16 @@ class InstallerService
     public static function updateEnv(array $data)
     {
         $envPath = base_path('.env');
+        $examplePath = base_path('.env.example');
+
+        if (!File::exists($envPath)) {
+            if (File::exists($examplePath)) {
+                File::copy($examplePath, $envPath);
+            } else {
+                throw new \Exception('.env.example tidak ditemukan');
+            }
+        }
+
         $env = File::get($envPath);
 
         try {

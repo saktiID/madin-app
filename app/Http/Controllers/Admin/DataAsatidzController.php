@@ -33,15 +33,17 @@ class DataAsatidzController extends Controller
             [
                 'asatidz' => Inertia::defer(
                     fn() =>
-                    User::orderBy('name', 'asc')
-                        ->has('ustadz')
+                    User::query()
                         ->with('ustadz:user_id,id')
+                        ->whereHas('ustadz') // hanya user yang punya ustadz
+                        ->whereNot('role', 'admin')
                         ->when($request->search, function ($query) use ($request) {
-                            $query
-                                ->where('name', 'like', '%' . $request->search . '%')
-                                ->orWhere('email', 'like', '%' . $request->search . '%')
-                                ->whereNot('role', 'admin');
+                            $query->where(function ($q) use ($request) {
+                                $q->where('name', 'like', '%' . $request->search . '%')
+                                    ->orWhere('email', 'like', '%' . $request->search . '%');
+                            });
                         })
+                        ->orderBy('name', 'asc')
                         ->paginate($request->perpage ?? 5)
                         ->onEachSide(1)
                         ->withQueryString()

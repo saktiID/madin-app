@@ -1,4 +1,5 @@
-*
-!avatars/
-!file-template/
+avatars/*
+file-template/*
+!avatars/avatar.png
+!file-template/.gitkeep
 !.gitignore

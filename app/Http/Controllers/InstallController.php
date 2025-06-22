@@ -10,7 +10,49 @@ class InstallController extends Controller
 {
     public function show()
     {
-        return view('installer.index');
+        $requiredExtensions = [
+            'bcmath',
+            'ctype',
+            'curl',
+            'dom',
+            'fileinfo',
+            'intl',
+            'json',
+            'libxml',
+            'mbstring',
+            'openssl',
+            'pdo',
+            'pdo_mysql',
+            'tokenizer',
+            'xml',
+            'zip',
+            'exif',
+            'iconv'
+        ];
+
+        $extensionsStatus = collect($requiredExtensions)->map(function ($ext) {
+            return [
+                'name' => $ext,
+                'loaded' => extension_loaded($ext),
+                'note' => null
+            ];
+        });
+
+        // Khusus gd / imagick
+        $gdLoaded = extension_loaded('gd');
+        $imagickLoaded = extension_loaded('imagick');
+        $imageSupport = [
+            'name' => 'gd / imagick',
+            'loaded' => $gdLoaded || $imagickLoaded,
+            'note' => $gdLoaded && $imagickLoaded
+                ? 'Keduanya aktif, bisa pilih salah satu'
+                : ($gdLoaded ? 'gd aktif' : ($imagickLoaded ? 'imagick aktif' : 'Keduanya tidak aktif'))
+        ];
+
+        // Gabungkan semua
+        $extensionsStatus->push($imageSupport);
+
+        return view('installer.index', compact('extensionsStatus'));
     }
 
     public function store(Request $request)
@@ -45,7 +87,7 @@ class InstallController extends Controller
             return redirect()->back()->withErrors(['db' => $changeEnv['message']]);
         }
 
-        return redirect()->route('install.show')->with('success', 'Berhasil test koneksi database.');
+        return redirect()->back()->withInput()->with('success', 'Berhasil test koneksi database.');
     }
 
     public function migrate()

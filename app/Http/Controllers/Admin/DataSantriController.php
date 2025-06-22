@@ -17,16 +17,18 @@ class DataSantriController extends Controller
             [
                 'santri' => Inertia::defer(
                     fn() =>
-                    Santri::orderBy('nama', 'asc')
-
+                    Santri::query()
                         ->when($request->search, function ($query) use ($request) {
-                            $query
-                                ->where('nama', 'like', '%' . $request->search . '%')
-                                ->orWhere('nis', 'like', '%' . $request->search . '%');
+                            $query->where(function ($q) use ($request) {
+                                $q->where('nama', 'like', '%' . $request->search . '%')
+                                    ->orWhere('nis', 'like', '%' . $request->search . '%');
+                            });
                         })
-                        ->paginate($request->perpage ?? 10)
+                        ->orderBy('nama')
+                        ->paginate($request->perpage ?? 5)
                         ->onEachSide(1)
                         ->withQueryString()
+
                 )
             ]
 

@@ -1,10 +1,14 @@
 <script setup>
+import { useUserStore } from "@/Stores/useUserStore";
+import { ref, computed } from "vue";
 import { sidebarState } from "@/Composables";
 import { usePage } from "@inertiajs/vue3";
 import { baseUrl } from "@/Helpers/baseurl";
 
-const avatar = usePage().props.auth.user.avatar;
-const avatarUrl = baseUrl(`avatar/${avatar}`);
+const userStore = useUserStore();
+
+const avatar = ref(usePage().props.auth.user.avatar);
+const avatarUrl = computed(() => baseUrl(`avatar/${avatar.value}`));
 </script>
 
 <template>
@@ -28,7 +32,7 @@ const avatarUrl = baseUrl(`avatar/${avatar}`);
                         'h-10 w-10': !sidebarState.isOpen,
                     },
                 ]"
-                :src="avatarUrl"
+                :src="userStore.avatarUrl"
                 alt="Avatar"
             />
         </div>

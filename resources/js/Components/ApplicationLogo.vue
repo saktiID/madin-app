@@ -1,11 +1,9 @@
 <script setup>
-import { usePage } from "@inertiajs/vue3";
-import { baseUrl } from "@/Helpers/baseurl";
+import { useMadinStore } from "@/Stores/useMadinStore";
 
-const logoMadin = usePage().props.madin.logo_madin;
-const logoUrl = baseUrl("/storage/logo/" + logoMadin);
+const madinStore = useMadinStore();
 </script>
 
 <template>
-    <img :src="logoUrl" alt="Logo" />
+    <img :src="madinStore.logoUrl" alt="Logo" />
 </template>

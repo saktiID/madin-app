@@ -128,7 +128,7 @@ class ExportService
 
         // proses file excel
         $filename = "data_asatidz_" . uniqid();
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Type: application/vnd.ms-excel');
         header("Content-Disposition: attachment; filename=" . $filename . ".xls");
         header('Cache-Control: max-age=0');
 

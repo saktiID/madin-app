@@ -17,7 +17,7 @@ class IdentitasController extends Controller
             ->pluck('deskripsi_identitas', 'slug')
             ->toArray();
 
-        return inertia('Admin/Identitas/IndexIdentitas', [
+        return inertia('Admin/Identitas/Identitas', [
             'identitas' => $identitas,
         ]);
     }

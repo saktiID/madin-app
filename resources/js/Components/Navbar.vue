@@ -203,7 +203,7 @@ onUnmounted(() => {
 
         <Link :href="route('dashboard')">
             <ApplicationLogo class="w-10 h-10" />
-            <span class="sr-only">K UI</span>
+            <span class="sr-only">Madin-App</span>
         </Link>
 
         <Button

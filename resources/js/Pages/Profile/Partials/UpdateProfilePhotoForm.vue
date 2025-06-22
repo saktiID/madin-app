@@ -62,6 +62,7 @@ const cropImage = () => {
 
             // Kirim gambar ke backend menggunakan Inertia.js
             form.post(route("profile.avatar"), {
+                only: ["auth", "flash"],
                 onFinish: () => {
                     closeModal();
                     if (form.hasErrors) {

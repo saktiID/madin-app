@@ -62,14 +62,28 @@ const cropImage = () => {
 
             // Kirim gambar ke backend menggunakan Inertia.js
             form.post(route("admin.upload.logo"), {
+                only: ["flash", "madin"],
                 onFinish: () => {
                     closeModal();
+                    if (form.hasErrors) {
+                        toast.error("Ada kesalahan dalam pengisian form.");
+                        window.errorSFX.play();
+                    }
                 },
                 onSuccess: () => {
                     const flash = usePage().props.flash;
-                    if (flash.success) toast.success(flash.success);
-                    if (flash.error) toast.error(flash.error);
-                    if (flash.info) toast.info(flash.info);
+                    if (flash.success) {
+                        toast.success(flash.success);
+                        window.successSFX.play();
+                    }
+                    if (flash.error) {
+                        toast.error(flash.error);
+                        window.errorSFX.play();
+                    }
+                },
+                onError: () => {
+                    toast.error("Terjadi kesalahan");
+                    window.errorSFX.play();
                 },
             });
         }, "image/png");
@@ -127,17 +141,18 @@ const cropImage = () => {
                         </div>
                         <div class="flex justify-end p-4 gap-2">
                             <!-- Tombol untuk mengirim gambar setelah dipotong -->
+                            <Button variant="secondary" @click="closeModal">
+                                Batal
+                            </Button>
                             <Button
                                 @click="cropImage"
                                 :disabled="form.processing"
-                                >Pangkas dan simpan</Button
+                                >{{
+                                    form.processing
+                                        ? "Menyimpan..."
+                                        : "Pangkas dan simpan"
+                                }}</Button
                             >
-                            <button
-                                @click="closeModal"
-                                class="bg-red-500 text-white p-2 rounded"
-                            >
-                                Batal
-                            </button>
                         </div>
                     </template>
                 </Modal>

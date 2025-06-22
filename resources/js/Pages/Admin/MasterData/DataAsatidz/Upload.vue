@@ -28,8 +28,12 @@ defineProps({
 const toast = useToast();
 const status = ref(false);
 const filename = ref(null);
+const fileInputRef = ref(null);
+const isDragging = ref(false);
 const filesize = ref(null);
 const showModalDelete = ref(false);
+const parsing = ref(null);
+const progress = ref(0);
 
 const form = useForm({
     file: null,
@@ -38,6 +42,25 @@ const deleteForm = useForm({
     id: null,
     filename: null,
 });
+
+const handleDrop = (e) => {
+    e.preventDefault();
+    isDragging.value = false;
+
+    const droppedFiles = e.dataTransfer.files;
+    if (fileInputRef.value) {
+        fileInputRef.value.files = droppedFiles;
+        fileInputRef.value.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+};
+const handleDragOver = (e) => {
+    e.preventDefault();
+    isDragging.value = true;
+};
+const handleDragLeave = () => {
+    isDragging.value = false;
+};
+
 const handleInputForm = (event) => {
     form.file = event.target.files[0];
     filename.value = form.file.name;
@@ -112,28 +135,8 @@ const closeModal = () => {
     deleteForm.reset();
     showModalDelete.value = false;
 };
-
-//
-const parsing = ref(null);
-const progress = ref(5);
 const handleParsing = async (id, filename) => {
     parsing.value = id;
-
-    try {
-        await axios.get(route("admin.master-data.data-asatidz.parsing"), {
-            params: { id, filename },
-        });
-
-        reload();
-
-        toast.success("Parsing selesai");
-        window.successSFX.play();
-    } catch (error) {
-        reload();
-        console.error("Gagal trigger parsing:", error);
-        toast.error("Terjadi kesalahan");
-        window.errorSFX.play();
-    }
 
     const interval = setInterval(async () => {
         try {
@@ -141,9 +144,10 @@ const handleParsing = async (id, filename) => {
                 route("admin.master-data.data-asatidz.polling"),
                 { params: { id } }
             );
+
             progress.value = res.data.progress;
 
-            if (progress.value === 100) {
+            if (progress.value >= 100) {
                 clearInterval(interval);
                 parsing.value = null;
             }
@@ -152,9 +156,32 @@ const handleParsing = async (id, filename) => {
             clearInterval(interval);
             parsing.value = null;
         }
-    }, 100);
-};
+    }, 300);
 
+    try {
+        const res = await axios.get(
+            route("admin.master-data.data-asatidz.parsing"),
+            {
+                params: { id, filename },
+            }
+        );
+
+        if (res.data.status === true) {
+            toast.success(res.data.msg);
+            window.successSFX.play();
+        } else {
+            toast.error(res.data.msg);
+            window.errorSFX.play();
+        }
+
+        reload();
+    } catch (error) {
+        reload();
+        console.error("Gagal trigger parsing:", error);
+        toast.error("Terjadi kesalahan");
+        window.errorSFX.play();
+    }
+};
 const reload = () => {
     parsing.value = null;
     progress.value = 0;
@@ -254,7 +281,15 @@ const reload = () => {
                     <div class="flex items-center justify-center w-full">
                         <label
                             for="dropzone-file"
-                            class="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                            @drop="handleDrop"
+                            @dragover="handleDragOver"
+                            @dragleave="handleDragLeave"
+                            class="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer transition duration-300"
+                            :class="[
+                                isDragging
+                                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900'
+                                    : 'border-gray-300 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600',
+                            ]"
                         >
                             <div
                                 class="flex flex-col items-center justify-center pt-5 pb-6"
@@ -273,15 +308,16 @@ const reload = () => {
                                 <p
                                     class="text-xs text-gray-500 dark:text-gray-400"
                                 >
-                                    XLS, XLSX (Maks. 3072kB)
+                                    XLS, XLSX (maks. 3MB)
                                 </p>
                             </div>
                             <input
                                 id="dropzone-file"
+                                ref="fileInputRef"
                                 type="file"
                                 class="hidden"
-                                @input="handleInputForm($event)"
-                                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                                @input="handleInputForm"
+                                accept=".xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                             />
                         </label>
                     </div>

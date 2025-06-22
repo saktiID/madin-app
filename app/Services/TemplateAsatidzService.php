@@ -41,95 +41,91 @@ class TemplateAsatidzService
         $spreadsheet = $reader->load($path);
         $activeWorksheet = $spreadsheet->getActiveSheet()->toArray();
 
-        $row = 10;
-        $length = 20;
         $log = [];
 
-        for ($i = 0; $i < $length; $i++) {
-            if (!isset($activeWorksheet[$row])) {
-                break;
-            }
-            $data = $activeWorksheet[$row++];
-            if (empty($data[1])) {
-                continue;
-            } else {
-                $has_error = false;
-
-                if (empty($data[2]) || empty($data[3]) || empty($data[4])) {
-                    $log[] = "Data dari {$data[1]} tidak lengkap.";
-                    continue;
-                }
-
-                // validate email
-                $email_validate = Validator::validate_email($data[2]);
-                if (!$email_validate) {
-                    $log[] = 'Email dari ' . $data[1] . ' tidak valid: ' . $data[2];
-                    $has_error = true;
-                }
-
-                // is unique email
-                $unique_email = Validator::is_unique_email($data[2]);
-                if (!$unique_email) {
-                    $log[] = 'Email dari ' . $data[1] . ' sudah ada: ' . $data[2];
-                    $has_error = true;
-                }
-
-                // validate nik
-                $nik_validate = Validator::validate_nik($data[3]);
-                if (!$nik_validate) {
-                    $log[] = 'NIK dari ' . $data[1] . ' tidak valid: ' . $data[3];
-                    $has_error = true;
-                }
-
-                // is unique nik
-                $unique_nik = Validator::is_unique_nik($data[3]);
-                if (!$unique_nik) {
-                    $log[] = 'NIK dari ' . $data[1] . ' sudah ada: ' . $data[3];
-                    $has_error = true;
-                }
-
-                // validate telp
-                $telp_validate = Validator::validate_telp($data[4]);
-                if (!$telp_validate) {
-                    $log[] = 'Telp dari ' . $data[1] . ' tidak valid: ' . $data[4];
-                    $has_error = true;
-                }
-
-                if ($has_error) {
-                    continue;
-                }
-            }
-
-            if ($has_error === false) {
-                try {
-                    // Simpan data ustadz baru
-                    DB::beginTransaction();
-                    $user = User::create([
-                        'name' => $data[1],
-                        'email' => $data[2],
-                        'password' => Hash::make('ustadz5758'),
-                        'role' => 'ustadz',
-                        'avatar' => null,
-                    ]);
-
-                    Ustadz::create([
-                        'user_id' => $user->id,
-                        'nik' => $data[3],
-                        'no_telepon' => $data[4],
-                        'gender' => $data[5],
-                        'alamat' => $data[6],
-                    ]);
-                    DB::commit();
-                } catch (Throwable $e) {
-                    DB::rollBack();
-                    $log[] = "Gagal menyimpan data {$data[1]}: " . $e->getMessage();
-                    continue;
-                }
-            }
+        for ($i = 10; $i < count($activeWorksheet); $i++) {
 
             // Buat cache progress
-            Cache::put("import_progress_{$id_file}", intval((($i + 1) / $length) * 100));
+            Cache::put("import_progress_{$id_file}", intval(($i / (count($activeWorksheet) - 10)) * 100));
+
+            if (!isset($activeWorksheet[$i][1])) {
+                break;
+            }
+
+            $has_error = false;
+            $data = $activeWorksheet[$i];
+
+            // validate value
+            if (empty($data[2]) || empty($data[3]) || empty($data[4])) {
+                $log[] = "Data dari {$data[1]} tidak lengkap.";
+                continue;
+            }
+
+            // validate email
+            $email_validate = Validator::validate_email($data[2]);
+            if (!$email_validate) {
+                $log[] = 'Email dari ' . $data[1] . ' tidak valid: ' . $data[2];
+                $has_error = true;
+            }
+
+            // is unique email
+            $unique_email = Validator::is_unique_email($data[2]);
+            if (!$unique_email) {
+                $log[] = 'Email dari ' . $data[1] . ' sudah ada: ' . $data[2];
+                $has_error = true;
+            }
+
+            // validate nik
+            $nik_validate = Validator::validate_nik($data[3]);
+            if (!$nik_validate) {
+                $log[] = 'NIK dari ' . $data[1] . ' tidak valid: ' . $data[3];
+                $has_error = true;
+            }
+
+            // is unique nik
+            $unique_nik = Validator::is_unique_nik($data[3]);
+            if (!$unique_nik) {
+                $log[] = 'NIK dari ' . $data[1] . ' sudah ada: ' . $data[3];
+                $has_error = true;
+            }
+
+            // validate telp
+            $telp_validate = Validator::validate_telp($data[4]);
+            if (!$telp_validate) {
+                $log[] = 'Telp dari ' . $data[1] . ' tidak valid: ' . $data[4];
+                $has_error = true;
+            }
+
+            if ($has_error) {
+                continue;
+            }
+
+            try {
+                // Simpan data ustadz baru
+                DB::beginTransaction();
+                $user = User::create([
+                    'name' => $data[1],
+                    'email' => $data[2],
+                    'password' => Hash::make('ustadz5758'),
+                    'role' => 'ustadz',
+                    'avatar' => null,
+                ]);
+
+                Ustadz::create([
+                    'user_id' => $user->id,
+                    'nik' => $data[3],
+                    'no_telepon' => $data[4],
+                    'gender' => $data[5],
+                    'alamat' => $data[6],
+                ]);
+                DB::commit();
+            } catch (Throwable $e) {
+                DB::rollBack();
+                $log[] = "Gagal menyimpan data {$data[1]}: " . $e->getMessage();
+                continue;
+            }
         }
+
 
         $status = 'Sukses';
         if (count($log) > 0) {
@@ -147,6 +143,8 @@ class TemplateAsatidzService
 
         // progress selesai
         Cache::put("import_progress_{$id_file}", 100, now()->addMinutes(3));
+
+        return (count($log) > 0 ? false : true);
     }
 
     public static function download_template()
@@ -393,8 +391,8 @@ class TemplateAsatidzService
 
 
         // proses file excel
-        $filename = "template_asatidz_" . date('dmyHis', time());
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $filename = "template_asatidz_" . uniqid();
+        header('Content-Type: application/vnd.ms-excel');
         header("Content-Disposition: attachment; filename=" . $filename . ".xls");
         header('Cache-Control: max-age=0');
 

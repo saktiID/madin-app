@@ -334,8 +334,12 @@ class DataAsatidzController extends Controller
     public function parsing(Request $request)
     {
         $path = Storage::path("file-template/" . $request->filename);
-        TemplateAsatidzService::parsing($path, $request->id);
-        return response()->json(['status' => 'done']);
+        $parsing = TemplateAsatidzService::parsing($path, $request->id);
+        if ($parsing) {
+            return response()->json(['status' => true, 'msg' => 'Parsing selesai']);
+        } else {
+            return response()->json(['status' => false, 'msg' => 'Parsing gagal']);
+        }
     }
 
     /**
@@ -344,7 +348,7 @@ class DataAsatidzController extends Controller
     public function polling(Request $request)
     {
         $id = $request->get('id');
-        $progress = Cache::get("import_progress_{$id}", 10);
+        $progress = Cache::get("import_progress_{$id}", 0);
         return response()->json(['progress' => $progress]);
     }
 

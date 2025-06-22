@@ -177,6 +177,7 @@ const handleParsing = async (id, filename) => {
         reload();
     } catch (error) {
         reload();
+        clearInterval(interval);
         console.error("Gagal trigger parsing:", error);
         toast.error("Terjadi kesalahan");
         window.errorSFX.play();
